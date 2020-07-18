@@ -11,6 +11,7 @@ public class DaoInfezione {
 	
 	private static SessionManager sm = new SessionManager();
 	
+	// Ritorna una lista di percentuali per zona (indici 0-19) di infetti(reali) sul totale di gente che lavora o vive in tale zona
 	public static List<Float> searchPercInfezioni() {
 		List<Long> utentiPerZona = new ArrayList<Long>();
 		List<Long> infettiPerZona = new ArrayList<Long>();
@@ -57,6 +58,7 @@ public class DaoInfezione {
 		}
 	}
 	
+	// Cerca un'infezione con l'id_utente corrispondente, ritorna vero se c'è un match (la persona è infetta), falso altrimenti
 	public static boolean searchInfezione(int id_utente) {
 		try {
 			sm.open();
@@ -74,6 +76,7 @@ public class DaoInfezione {
 		}
 	}
 	
+	// Creazione di una nuova infezione con l'id_utente specificato
 	public static void createInfezione(int id_utente) {
 		try {
 			sm.open();

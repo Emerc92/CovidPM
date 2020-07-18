@@ -36,6 +36,7 @@ public class DaoUtente {
 		}
 	}
 	
+	// Ritorna la lista di tutti gli utenti sul database
 	public static List<Utente> getUtenteList() {
 		try {
 			sm.open();
@@ -77,6 +78,7 @@ public class DaoUtente {
 		}
 	}
 	
+	// Crea una password randomica di 8 caratteri
 	private static String createPassword() {
 		Random r = new Random();
 		StringBuilder sb = new StringBuilder();
