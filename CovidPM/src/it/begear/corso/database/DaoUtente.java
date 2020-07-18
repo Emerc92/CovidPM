@@ -1,5 +1,6 @@
 package it.begear.corso.database;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.persistence.NoResultException;
@@ -29,6 +30,23 @@ public class DaoUtente {
 					
 		} catch(NoResultException e) {
 			System.out.println("Nessun utente con tali dati nel database.");
+			return null;
+		} finally {
+			sm.close();
+		}
+	}
+	
+	public static List<Utente> getUtenteList() {
+		try {
+			sm.open();
+			
+			@SuppressWarnings("unchecked")
+			List<Utente> utenti = sm.getSession().createQuery("FROM Utente")
+									.getResultList();
+			return utenti;
+					
+		} catch(Exception e) {
+			System.out.println("Errore durante la lettura di utenti dal database.");
 			return null;
 		} finally {
 			sm.close();
