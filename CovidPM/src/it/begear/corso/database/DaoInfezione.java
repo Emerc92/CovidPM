@@ -12,8 +12,8 @@ public class DaoInfezione {
 	private static SessionManager sm = new SessionManager();
 	
 	public static List<Float> searchPercInfezioni() {
-		List<Integer> utentiPerZona = new ArrayList<Integer>();
-		List<Integer> infettiPerZona = new ArrayList<Integer>();
+		List<Long> utentiPerZona = new ArrayList<Long>();
+		List<Long> infettiPerZona = new ArrayList<Long>();
 		List<Float> percInfezioni = new ArrayList<Float>();
 		
 		try {
@@ -21,18 +21,26 @@ public class DaoInfezione {
 			
 			for(int i = 0; i < 20; i++) {
 				int numeroZona = i + 1;
+				int numeroZona2 = i + 1;
 				
-				utentiPerZona.add((Integer) sm.getSession().createQuery("SELECT SUM(id_zona_res = :numeroZona OR id_zona_lav = :numeroZona) FROM Utente")
-						.setParameter("numeroZona", numeroZona)
-						.getSingleResult());
-				
-				Integer infettiZonaAttuale = (Integer) sm.getSession().createQuery("SELECT SUM(id_zona_res = :numeroZona OR id_zona_lav = :numeroZona) FROM Utente INNER JOIN Infezione ON Utente.id = Infezione.id_utente")
-						.setParameter("numeroZona", numeroZona)
-						.getSingleResult();
-				if(infettiZonaAttuale == null) {
-					infettiZonaAttuale = 0;
+				try {
+					utentiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
+							.setParameter("numeroZona", numeroZona)
+							.setParameter("numeroZona2", numeroZona2)
+							.getSingleResult());
+				} catch (Exception e) {
+					utentiPerZona.add(0L);
 				}
-				infettiPerZona.add(infettiZonaAttuale);
+				
+				try {
+					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente INNER JOIN Infezione ON Utente.id = Infezione.id_utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
+							.setParameter("numeroZona", numeroZona)
+							.setParameter("numeroZona2", numeroZona2)
+							.getSingleResult());
+				} catch (Exception e) {
+					infettiPerZona.add(0L);
+				}
+				
 				
 				percInfezioni.add((float) (infettiPerZona.get(i) / utentiPerZona.get(i)));
 				
