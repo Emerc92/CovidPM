@@ -47,6 +47,22 @@ public class Utente {
 	private String tipo;
 	
 	public Utente() {}
+	
+	public Utente(String nome, String cognome, String genere, int id_zona_res, int id_zona_lav, String username,
+			String password, String tipo) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.genere = genere;
+		this.id_zona_res = id_zona_res;
+		this.id_zona_lav = id_zona_lav;
+		this.username = username;
+		this.password = password;
+		this.tipo = tipo;
+		this.status = "Non Testato";
+		this.cod_fis = (nome.substring(0, 3).toUpperCase() + cognome.substring(0, 3).toUpperCase() + 
+				((id_zona_res < 10)? "0" : "") + id_zona_res + ((id_zona_lav < 10)? "0" : "") + id_zona_lav + genere).trim();
+	}
+
 
 	public int getId() {
 		return id;
