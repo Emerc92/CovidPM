@@ -24,6 +24,11 @@ public class Messaggio {
 
 	public Messaggio() {}
 
+	public Messaggio(int id_utente, String txt_msg) {
+		this.id_utente = id_utente;
+		this.txt_msg = txt_msg;
+	}
+
 	public int getId() {
 		return id;
 	}

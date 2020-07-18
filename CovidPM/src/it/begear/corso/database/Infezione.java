@@ -20,6 +20,10 @@ public class Infezione {
 	private int id_utente;
 
 	public Infezione() {}
+	
+	public Infezione(int id_utente) {
+		this.id_utente = id_utente;
+	}
 
 	public int getId() {
 		return id;
