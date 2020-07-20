@@ -96,10 +96,10 @@ public class DaoUtente {
 		try {
 			sm.open();
 			
-			idMediciZona = sm.getSession().createQuery("SELECT id_utente FROM Utente WHERE tipo = :tipo AND id_zona_lav = :id_zona_lav")
+			idMediciZona = sm.getSession().createQuery("SELECT id FROM Utente WHERE tipo = :tipo AND id_zona_lav = :id_zona_lav")
 							.setParameter("tipo", "Medico")
 							.setParameter("id_zona_lav", id_zona_lav)
-							.getResultList();
+							.list();
 			
 			return idMediciZona;
 					
