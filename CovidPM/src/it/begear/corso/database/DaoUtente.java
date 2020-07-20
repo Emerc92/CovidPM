@@ -38,22 +38,62 @@ public class DaoUtente {
 	}
 	
 	// Ritorna la lista di tutti gli utenti sul database
-	public static List<Utente> getListaUtenti() {
+		public static List<Utente> getListaUtenti() {
+			try {
+				sm.open();
+				
+				@SuppressWarnings("unchecked")
+				List<Utente> utenti = sm.getSession().createQuery("FROM Utente")
+										.getResultList();
+				return utenti;
+						
+			} catch(Exception e) {
+				System.out.println("Errore durante la lettura di utenti dal database.");
+				return null;
+			} finally {
+				sm.close();
+			}
+		}
+	
+	// Ritorna la lista di tutti gli utenti con nome e cognome cercati
+	public static List<Utente> getUtentiNomeCognome(String nome, String cognome) {
 		try {
 			sm.open();
-			
 			@SuppressWarnings("unchecked")
-			List<Utente> utenti = sm.getSession().createQuery("FROM Utente")
-									.getResultList();
+			List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE nome = :nome AND cognome = :cognome")
+									.setParameter("nome", nome)
+									.setParameter("cognome", cognome)
+									.getResultList();									
+			
 			return utenti;
 					
 		} catch(Exception e) {
-			System.out.println("Errore durante la lettura di utenti dal database.");
+			System.out.println("Nessun utente con tali dati nel database.");
 			return null;
 		} finally {
 			sm.close();
 		}
 	}
+	
+	// Ritorna la lista di tutti gli utenti in quella zona
+	public static List<Utente> getUtentiZona(int id_zona_res) {
+		try {
+			sm.open();
+			@SuppressWarnings("unchecked")
+			List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res")
+									.setParameter("id_zona_res", id_zona_res)
+									.getResultList();								
+			
+			return utenti;
+					
+		} catch(Exception e) {
+			System.out.println("Nessun utente con tali dati nel database.");
+			return null;
+		} finally {
+			sm.close();
+		}
+	}
+	
 	
 	// Ritorna una lista di numero di utenti per zona (residenza o lavoro)
 	public static List<Long> getNumUtentiPerZona() {
