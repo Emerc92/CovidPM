@@ -76,12 +76,13 @@ public class DaoUtente {
 	}
 	
 	// Ritorna la lista di tutti gli utenti in quella zona
-	public static List<Utente> getUtentiZona(int id_zona_res) {
+	public static List<Utente> getPositiviZona(int id_zona_res) {
 		try {
 			sm.open();
 			@SuppressWarnings("unchecked")
-			List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res")
+			List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res AND status = :status")
 									.setParameter("id_zona_res", id_zona_res)
+									.setParameter("status", "Positivo")
 									.getResultList();								
 			
 			return utenti;
