@@ -11,10 +11,9 @@ public class DaoInfezione {
 	
 	private static SessionManager sm = new SessionManager();
 	
-	public static List<Float> searchPercInfezioni() {
-		List<Long> utentiPerZona = new ArrayList<Long>();
+	// Ritorna una lista di numero di infetti per zona (residenza o lavoro)
+	public static List<Long> getNumInfezioniPerZona() {
 		List<Long> infettiPerZona = new ArrayList<Long>();
-		List<Float> percInfezioni = new ArrayList<Float>();
 		
 		try {
 			sm.open();
@@ -22,15 +21,6 @@ public class DaoInfezione {
 			for(int i = 0; i < 20; i++) {
 				int numeroZona = i + 1;
 				int numeroZona2 = i + 1;
-				
-				try {
-					utentiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
-							.setParameter("numeroZona", numeroZona)
-							.setParameter("numeroZona2", numeroZona2)
-							.getSingleResult());
-				} catch (Exception e) {
-					utentiPerZona.add(0L);
-				}
 				
 				try {
 					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente INNER JOIN Infezione ON Utente.id = Infezione.id_utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
@@ -41,14 +31,10 @@ public class DaoInfezione {
 					infettiPerZona.add(0L);
 				}
 				
-				
-				percInfezioni.add((float) (infettiPerZona.get(i) / utentiPerZona.get(i)));
-				
 			}
 			
-			return percInfezioni;
-
-					
+			return infettiPerZona;
+	
 		} catch(Exception e) {
 			System.out.println("Errore durante la raccolta di informazioni sulle infezioni.");
 			return null;
@@ -57,6 +43,7 @@ public class DaoInfezione {
 		}
 	}
 	
+	// Cerca un'infezione con l'id_utente corrispondente, ritorna vero se c'è un match (la persona è infetta), falso altrimenti
 	public static boolean searchInfezione(int id_utente) {
 		try {
 			sm.open();
@@ -67,13 +54,13 @@ public class DaoInfezione {
 			return true;
 					
 		} catch(NoResultException e) {
-			System.out.println("Nessuna infezione con tali dati nel database.");
 			return false;
 		} finally {
 			sm.close();
 		}
 	}
 	
+	// Creazione di una nuova infezione con l'id_utente specificato
 	public static void createInfezione(int id_utente) {
 		try {
 			sm.open();
