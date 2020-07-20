@@ -88,6 +88,30 @@ public class DaoUtente {
 	}
 	
 	
+	// Ritorna la lista degli id dei medici che lavora in tale zona
+	@SuppressWarnings("unchecked")
+	public static List<Integer> getIdMediciZona(int id_zona_lav) {
+		List<Integer> idMediciZona;
+		
+		try {
+			sm.open();
+			
+			idMediciZona = sm.getSession().createQuery("SELECT id_utente FROM Utente WHERE tipo = :tipo AND id_zona_lav = :id_zona_lav")
+							.setParameter("tipo", "Medico")
+							.setParameter("id_zona_lav", id_zona_lav)
+							.getResultList();
+			
+			return idMediciZona;
+					
+		} catch(Exception e) {
+			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
+			return null;
+		} finally {
+			sm.close();
+		}
+	}
+	
+	
 	// Creazione utente da parte dell'operatore, ritorna boolean in base all'esito
 	public static boolean createUtente(String nome, String cognome, String genere, int id_zona_res, int id_zona_lav, String tipo) {
 		Random random = new Random();
