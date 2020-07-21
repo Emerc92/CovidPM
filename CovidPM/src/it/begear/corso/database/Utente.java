@@ -59,8 +59,8 @@ public class Utente {
 		this.password = password;
 		this.tipo = tipo;
 		this.status = "Non Testato";
-		this.cod_fis = (nome.substring(0, 3).toUpperCase() + cognome.substring(0, 3).toUpperCase() + 
-				((id_zona_res < 10)? "0" : "") + id_zona_res + ((id_zona_lav < 10)? "0" : "") + id_zona_lav + genere).trim();
+		this.cod_fis = nome.trim().substring(0, 3).toUpperCase() + cognome.trim().substring(0, 3).toUpperCase() + 
+				((id_zona_res < 10)? "0" : "") + id_zona_res + ((id_zona_lav < 10)? "0" : "") + id_zona_lav + genere;
 	}
 
 
