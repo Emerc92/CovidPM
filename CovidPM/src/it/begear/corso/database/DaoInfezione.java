@@ -23,7 +23,7 @@ public class DaoInfezione {
 				int numeroZona2 = i + 1;
 				
 				try {
-					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente INNER JOIN Infezione ON Utente.id = Infezione.id_utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
+					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente u INNER JOIN Infezione i ON u.id = i.id_utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
 							.setParameter("numeroZona", numeroZona)
 							.setParameter("numeroZona2", numeroZona2)
 							.getSingleResult());

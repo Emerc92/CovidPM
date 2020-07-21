@@ -120,7 +120,7 @@ public class DaoUtente {
 			try {
 				sm.open();
 				@SuppressWarnings("unchecked")
-				List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res AND status != :status")
+				List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res AND status <> :status")
 										.setParameter("id_zona_res", id_zona_res)
 										.setParameter("status", "Positivo")
 										.getResultList();								
