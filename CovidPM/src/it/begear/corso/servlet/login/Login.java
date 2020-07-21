@@ -32,8 +32,7 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 		Utente client = DaoUtente.login(username,password);
 		HttpSession session = request.getSession();
-		session.setAttribute("username", client.getUsername());
-		session.setAttribute("password", client.getPassword());
+		session.setAttribute("client", client);
 		
 		if(client == null)response.sendRedirect("Login.jsp?status=DENIED");
 		else if( client.getTipo().equals("Operatore")){
@@ -42,20 +41,11 @@ public class Login extends HttpServlet {
 		else if( client.getTipo().equals("Agente")){
 			response.sendRedirect("Polizia.jsp");	
 		}
+		else if( client.getTipo().equals("Medico")){
+			response.sendRedirect("Medico.jsp");	
+		}
 		}
 		
-//		  response.setContentType("text/html");
-//        PrintWriter out = response.getWriter();
-//        out.println("<html>");
-//        out.println("<head><title>HTML interpretato da Java</title></head>");
-//        out.println("<body>"); 
-//		
-//        out.println("<a href='http://www.google.com'>Vai al motore di ricerca</a>");
-//        out.println("<p>L'username è '" + username + "'<p>");
-//		
-//        out.println("</body>");
-//        out.println("</html>");
-//        out.close();
 		
 	}
 

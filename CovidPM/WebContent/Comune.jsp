@@ -10,15 +10,6 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <!-- prende i parametri username e password dall'URL-->
-<%
-//String user = request.getParameter("username"); //possiamo fare la richiesta perchè il parametro è stato passato dall URL
-//String psw = request.getParameter("password");
-String user = (String)session.getAttribute("username");
-String psw = (String)session.getAttribute("password");
-//qui settiamo l'oggetto utente dell'USER
-session.setAttribute("client", DaoUtente.login(user,psw)); // setta nella sessione l'oggetto dato da login(l'USER)
-
-%> 
 </head>
 <body>
 <!-- Servlet RegistraUtente -->	
