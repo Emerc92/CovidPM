@@ -11,8 +11,8 @@
 (nb.la sessione dura 30 min se non specificato diversamente nel web.xml) -->
 <%session.setAttribute("status", "ok"); %> 
 
-<!-- Servlet Acchiappa -->	
-	<form action="Acchiappa" method="post">
+<!-- Servlet Login -->	
+	<form action="Login" method="post">
 		<label for="username">Username:</label> <input type="text"
 			id="username" name="username"><br>
 		<br> <label for="password">Password:</label> <input type="text"
@@ -25,7 +25,7 @@
 	<form action="AggiornaDB" method="post">
 		<p id="frase">01/03/2020</p>
 		<input type="submit" value="Aggiorna">
-
+    </form>
 <!-- nella servlet Acchiappa controlliamo l'username e la password inseriti e,
 in caso negativo, ricarica la pagina cambiando la var "status" con valore stringa "denied",TRAMITE URL -->	
 
@@ -34,6 +34,6 @@ in caso negativo, ricarica la pagina cambiando la var "status" con valore string
            if (accesso != null && accesso.equals("DENIED")) {%>
 		<font color="red"> Username o Password non valide!</font>
 		<% } %>
-	</form>
+	
 </body>
 </html>

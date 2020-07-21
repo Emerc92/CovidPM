@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="it.begear.corso.database.Utente" %>  <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
-<%@ page import="it.begear.corso.database.DaoUtente" %>  <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
+<%@ page import="it.begear.corso.database.Utente"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
+<%@ page import="it.begear.corso.database.DaoUtente"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <!DOCTYPE html>
 <html>
 <head>

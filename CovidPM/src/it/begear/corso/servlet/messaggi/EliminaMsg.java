@@ -12,6 +12,7 @@ import it.begear.corso.database.DaoMessaggio;
 import it.begear.corso.database.Utente;
 
 
+
 /**
  * Servlet implementation class EliminaMsg
  */
@@ -26,7 +27,18 @@ public class EliminaMsg extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("client");
 		DaoMessaggio.deleteMessaggiUtente(utente);
+		if(utente.getTipo().equals("Operatore")) {
 		response.sendRedirect("Comune.jsp?status=eliminati");
+		}
+		else if(utente.getTipo().equals("Agente")){
+			response.sendRedirect("Polizia.jsp?status=eliminati");
+			}
+		else if(utente.getTipo().equals("Medico")){
+			response.sendRedirect("Medico.jsp?status=eliminati");
+			}
+//		else if(utente.getTipo().equals("Cittadino")){
+//			response.sendRedirect("Cittadino.jsp?status=eliminati");
+//			}
 	}
 
 }

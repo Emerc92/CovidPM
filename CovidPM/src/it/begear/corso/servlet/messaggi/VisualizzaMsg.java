@@ -32,6 +32,18 @@ public class VisualizzaMsg extends HttpServlet {
 		{
 			System.out.println(txt.getTxt_msg());
 		}
+		if(utente.getTipo().equals("Operatore")) {
+			response.sendRedirect("Comune.jsp?status=visualizzati");
+			}
+			else if(utente.getTipo().equals("Agente")){
+				response.sendRedirect("Polizia.jsp?status=visualizzati");
+				}
+			else if(utente.getTipo().equals("Medico")){
+				response.sendRedirect("Medico.jsp?status=visualizzati");
+				}
+//			else if(utente.getTipo().equals("Cittadino")){
+//				response.sendRedirect("Cittadino.jsp?status=visualizzati");
+//				}
 	}
 
 }
