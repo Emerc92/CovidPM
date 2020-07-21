@@ -75,7 +75,7 @@ public class DaoUtente {
 		}
 	}
 	
-	// Ritorna la lista di tutti gli utenti in quella zona
+	// Ritorna la lista di tutti gli utenti positivi in quella zona
 	public static List<Utente> getPositiviZona(int id_zona_res) {
 		try {
 			sm.open();
@@ -94,6 +94,46 @@ public class DaoUtente {
 			sm.close();
 		}
 	}
+	
+	// Ritorna la lista di tutti gli utenti positivi in quella zona
+		public static List<Utente> getNegativiZona(int id_zona_res) {
+			try {
+				sm.open();
+				@SuppressWarnings("unchecked")
+				List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res AND status = :status")
+										.setParameter("id_zona_res", id_zona_res)
+										.setParameter("status", "Negativo")
+										.getResultList();								
+				
+				return utenti;
+						
+			} catch(Exception e) {
+				System.out.println("Nessun utente con tali dati nel database.");
+				return null;
+			} finally {
+				sm.close();
+			}
+		}
+	
+	// Ritorna la lista di tutti gli utenti non positivi (negativi o non testati) in quella zona
+		public static List<Utente> getNonPositiviZona(int id_zona_res) {
+			try {
+				sm.open();
+				@SuppressWarnings("unchecked")
+				List<Utente> utenti =  (List<Utente>) sm.getSession().createQuery("FROM Utente WHERE id_zona_res = :id_zona_res AND status != :status")
+										.setParameter("id_zona_res", id_zona_res)
+										.setParameter("status", "Positivo")
+										.getResultList();								
+				
+				return utenti;
+						
+			} catch(Exception e) {
+				System.out.println("Nessun utente con tali dati nel database.");
+				return null;
+			} finally {
+				sm.close();
+			}
+		}
 	
 	
 	// Ritorna una lista di numero di utenti per zona (residenza o lavoro)
@@ -152,11 +192,33 @@ public class DaoUtente {
 		}
 	}
 	
+	// Ritorna l'id dell'operatore comunale che lavora in tale zona
+		public static int getIdOperatoreZona(int id_zona_lav) {
+			int idOperatoreZona;
+			
+			try {
+				sm.open();
+				
+				idOperatoreZona = (int) sm.getSession().createQuery("SELECT id FROM Utente WHERE tipo = :tipo AND id_zona_lav = :id_zona_lav")
+											.setParameter("tipo", "Operatore")
+											.setParameter("id_zona_lav", id_zona_lav)
+											.getSingleResult();
+				
+				return idOperatoreZona;
+						
+			} catch(Exception e) {
+				System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
+				return -1;
+			} finally {
+				sm.close();
+			}
+		}
+	
 	
 	// Creazione utente da parte dell'operatore, ritorna boolean in base all'esito
 	public static boolean createUtente(String nome, String cognome, String genere, int id_zona_res, int id_zona_lav, String tipo) {
 		Random random = new Random();
-		String username = nome + cognome + (1000 + random.nextInt(9000));
+		String username = nome.trim() + cognome.trim() + (1000 + random.nextInt(9000));
 		String password = createPassword();
 		
 		try {
@@ -187,6 +249,30 @@ public class DaoUtente {
 		}
 		
 		return sb.toString();
+	}
+	
+	// Modifica lo status di un utente in base alla presenza o meno di un infezione a suo nome
+	public static boolean updateStatus(int id, String status) {
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createQuery("UPDATE Utente SET status = :status WHERE id = :id")
+							.setParameter("status", status)
+							.setParameter("id", id)
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nella modifica, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+		} finally {
+			sm.close();
+		}
 	}
 	
 }
