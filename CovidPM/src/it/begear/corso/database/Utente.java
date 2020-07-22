@@ -59,8 +59,17 @@ public class Utente {
 		this.password = password;
 		this.tipo = tipo;
 		this.status = "Non Testato";
-		this.cod_fis = nome.trim().substring(0, 3).toUpperCase() + cognome.trim().substring(0, 3).toUpperCase() + 
-				((id_zona_res < 10)? "0" : "") + id_zona_res + ((id_zona_lav < 10)? "0" : "") + id_zona_lav + genere;
+		StringBuilder nomeCodFis = new StringBuilder(nome.trim().toUpperCase());
+		while(nomeCodFis.length() < 3) {
+			nomeCodFis.append("X");
+		}
+		StringBuilder cognomeCodFis = new StringBuilder(cognome.trim().toUpperCase());
+		while(cognomeCodFis.length() < 3) {
+			cognomeCodFis.append("X");
+		}
+		
+		this.cod_fis = nomeCodFis.toString().substring(0, 3) + cognomeCodFis.toString().substring(0, 3) 
+					+ ((id_zona_res < 10)? "0" : "") + id_zona_res + ((id_zona_lav < 10)? "0" : "") + id_zona_lav + genere;
 	}
 
 
