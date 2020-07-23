@@ -6,7 +6,7 @@ public class DaoMessaggio {
 	
 	private static SessionManager sm = new SessionManager();
 	
-	// Ricerca dei propri messaggi da parte di un utente, ritorna l'intera lista di messaggi
+	// Ritorna l'intera lista di messaggi appartenente ad un determinato utente
 	public static List<Messaggio> getMessaggiUtente(Utente utente) {
 		int id_utente = utente.getId();
 		
@@ -23,12 +23,14 @@ public class DaoMessaggio {
 		} catch(Exception e) {
 			System.out.println("Errore nella ricerca di messaggi.");
 			return null;
+			
 		} finally {
 			sm.close();
 		}
 	}
 	
 	// Creazione messaggio associato ad un determinato utente
+	// Ritorna true se il messaggio viene creato, altrimenti false
 	public static boolean createMessaggio(int id_utente, String txt_msg) {
 		
 		try {
@@ -45,12 +47,13 @@ public class DaoMessaggio {
 			System.out.println("Errore nella creazione del messaggio, eseguo un rollback.");
 			sm.getSession().getTransaction().rollback();
 			return false;
+			
 		} finally {
 			sm.close();
 		}
 	}
 	
-	// Eliminazione dei propri messaggi da parte di un utente
+	// Eliminazione di tutti i messaggi appartenenti ad un determinato utente
 	public static void deleteMessaggiUtente(Utente utente) {
 		int id_utente = utente.getId();
 		
