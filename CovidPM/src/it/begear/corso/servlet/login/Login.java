@@ -15,10 +15,6 @@ import it.begear.corso.database.DaoUtente;
 import it.begear.corso.database.Utente;
 
 
-
-/**
- * Servlet implementation class Acchiappa
- */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,14 +23,18 @@ public class Login extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String username = request.getParameter("username");//request è quando viene immesso dall'user
-		String password = request.getParameter("password");
-		Utente client = DaoUtente.login(username,password);
-		HttpSession session = request.getSession();
-		session.setAttribute("client", client);
 		
-		if(client == null)response.sendRedirect("Login.jsp?status=DENIED");
+		//prendiamo i parametri immessi dal client
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		//NB. se il DAO .login non trova il pojo ritorna un null
+		Utente client = DaoUtente.login(username,password); //instanziamo l'utente "client"
+		HttpSession session = request.getSession();         //instanzia la session web(NB.di default ha una durata di 30 min se non specificato diversamente nel file web.xml)
+		session.setAttribute("client", client);             //carica l'oggetto "client" in sessione per poterlo riusare successivamente
+		
+		// se username e password sono sbagliati, reindirizza al login (modificando la variabile status)
+		if(client == null)response.sendRedirect("Login.jsp?status=DENIED");		
 		else if( client.getTipo().equals("Operatore")){
 			response.sendRedirect("Comune.jsp");	
 		}

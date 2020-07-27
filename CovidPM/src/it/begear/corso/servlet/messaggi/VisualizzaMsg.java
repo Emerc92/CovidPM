@@ -27,6 +27,7 @@ public class VisualizzaMsg extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("client");
+		//ottiene messaggi del client
 		List<Messaggio> messaggi = DaoMessaggio.getMessaggiUtente(utente);
 		for(Messaggio txt: messaggi)
 		{

@@ -11,10 +11,6 @@ import javax.servlet.http.HttpSession;
 import it.begear.corso.database.DaoUtente;
 
 
-
-/**
- * Servlet implementation class RegistraUtente
- */
 @WebServlet("/RegistraUtente")
 public class RegistraUtente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +30,7 @@ public class RegistraUtente extends HttpServlet {
 		int id_zona_lav = Integer.parseInt(zonaLav);
 		
 		//anche se infilato nell'if, crea ugualmente l'utente e poi restituisce il booleano TRUE se è andato tutto bene
-		if(DaoUtente.createUtente(nome, cognome, genere, id_zona_res, id_zona_lav, tipo))
+		if(DaoUtente.createUtente(nome, cognome, genere, id_zona_res, id_zona_lav, tipo)) //se l'utente è creato
 		{
 			response.sendRedirect("Comune.jsp?status=creato");
 		}	

@@ -26,7 +26,7 @@ public class EliminaMsg extends HttpServlet {
 	
 		HttpSession session = request.getSession();
 		Utente utente = (Utente) session.getAttribute("client");
-		DaoMessaggio.deleteMessaggiUtente(utente);
+		DaoMessaggio.deleteMessaggiUtente(utente); //elimina tutti i messaggi del client
 		if(utente.getTipo().equals("Operatore")) {
 		response.sendRedirect("Comune.jsp?status=eliminati");
 		}

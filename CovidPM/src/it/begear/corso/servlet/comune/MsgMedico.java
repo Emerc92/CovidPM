@@ -15,9 +15,6 @@ import it.begear.corso.database.DaoUtente;
 import it.begear.corso.database.Utente;
 
 
-/**
- * Servlet implementation class MsgMedico
- */
 @WebServlet("/MsgMedico")
 public class MsgMedico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,11 +29,11 @@ public class MsgMedico extends HttpServlet {
 		
 		String msg = "Attenzione!! Il signor " + client.getCognome() + " " + client.getNome()
 				+ " ha richiesto "+ nTamp + " tamponi per la regione " + client.getId_zona_lav();
-		
+		//prendi gli id dei medici nella zona di lavoro del client(che è un operatore regionale)
 		List <Integer> IdMedici = DaoUtente.getIdMediciZona(client.getId_zona_lav());
 		for(Integer x : IdMedici)
 		{
-		DaoMessaggio.createMessaggio(x,msg); 		
+		DaoMessaggio.createMessaggio(x,msg); //manda un messaggio a tutti gli id dei medici della zona 		
 		}
 	response.sendRedirect("Comune.jsp?status=inviato");
 		

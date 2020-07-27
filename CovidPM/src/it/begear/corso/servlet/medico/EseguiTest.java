@@ -49,10 +49,11 @@ public class EseguiTest extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		    String nTamp = request.getParameter("nTamp");
+		    String nTamp = request.getParameter("nTamp"); //prende il numero di tamponi
 		    int nT = Integer.parseInt(nTamp);
 		    HttpSession session = request.getSession();
-		    Utente client = (Utente) session.getAttribute("client");
+		    Utente client = (Utente) session.getAttribute("client"); //prende l'oggetto utente "client"
+		    //ritorna la lista di utenti non positivi
 		    List<Utente> utentiNonPositivi = DaoUtente.getNonPositiviZona(client.getId_zona_lav());
 		    
 		    int tamponiEseguiti = 0;
@@ -60,33 +61,33 @@ public class EseguiTest extends HttpServlet {
 		    int nNegativi = 0;
 		    
 		    // esecuzione tamponi su utenti random finché non si raggiunge la quota o si finiscono i non positivi
-		    while(!utentiNonPositivi.isEmpty() && tamponiEseguiti < nT) {
+		    while(!utentiNonPositivi.isEmpty() && tamponiEseguiti < nT) { //finche la lista non è vuota e i tamponi eseguiti sono meno dei tamponi richiesti
 		      Random random = new Random();
-		      int randomIndex = random.nextInt(utentiNonPositivi.size());
+		      int randomIndex = random.nextInt(utentiNonPositivi.size()); 
 		      
-		      Utente paziente = utentiNonPositivi.get(randomIndex);
-		      boolean infetto = DaoInfezione.searchInfezione(paziente.getId());
+		      Utente paziente = utentiNonPositivi.get(randomIndex);//prendi un paziente a caso dalla lista
+		      boolean infetto = DaoInfezione.searchInfezione(paziente.getId()); //cerca paziente nella tabella infezioni
 		      String status;
 		      
-		      if(infetto) {
+		      if(infetto) { //se è presente cambia lo status a positivo
 		        status = "Positivo";
 		        nPositivi++;
-		      } else {
+		      } else { //altrimenti cambia lo status a negativo
 		        status = "Negativo";
 		        nNegativi++;
 		      }
 		      
 		      DaoUtente.updateStatus(paziente.getId(), status);
 		      String messaggioPaziente = "T'abbiamo testato e sei " + status.toLowerCase();
-		      DaoMessaggio.createMessaggio(paziente.getId(), messaggioPaziente);
+		      DaoMessaggio.createMessaggio(paziente.getId(), messaggioPaziente); //manda un messaggio al paziente
 		      
-		      utentiNonPositivi.remove(paziente);
+		      utentiNonPositivi.remove(paziente); //rimuovi paziente dalla lista di controllo del while
 		      
 		      tamponiEseguiti++;
 		    }
 		    
-		msgOperatore(client,tamponiEseguiti,nPositivi,nNegativi);
-		updateZona(client);
+		msgOperatore(client,tamponiEseguiti,nPositivi,nNegativi);// manda messaggio all'operatore con i risultati del test
+		updateZona(client); //aggiorna lo status della zona di lavoro del client: verde,giallo e rosso
 		response.sendRedirect("Medico.jsp?status=test");
 	}
 

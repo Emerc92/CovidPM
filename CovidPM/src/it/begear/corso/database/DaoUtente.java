@@ -21,11 +21,11 @@ public class DaoUtente {
 	// ritorna l'istanza di utente del database, altrimenti ritorna null
 	public static Utente login(String username, String password) {
 		try {
-			sm.open();
+			sm.open(); //apre una session creata dalla "sessionFactory"
 			Utente utente = (Utente) sm.getSession().createQuery("FROM Utente WHERE username = :username AND password = :password")
 							.setParameter("username", username)
 							.setParameter("password", password)
-							.getSingleResult();
+							.getSingleResult(); //ritorna un risultato singolo o lancia un eccezione!
 			
 			return utente;
 					
@@ -34,7 +34,7 @@ public class DaoUtente {
 			return null;
 			
 		} finally {
-			sm.close();
+			sm.close(); //chiude la session 
 		}
 	}
 	
