@@ -31,13 +31,13 @@ public class DaoMessaggio {
 	
 	// Creazione messaggio associato ad un determinato utente
 	// Ritorna true se il messaggio viene creato, altrimenti false
-	public static boolean createMessaggio(int id_utente, String txt_msg) {
+	public static boolean createMessaggio(int id_utente, int id_mittente, String txt_msg) {
 		
 		try {
 			sm.open();
 			sm.getSession().beginTransaction();
 			
-			Messaggio messaggio = new Messaggio(id_utente, txt_msg);
+			Messaggio messaggio = new Messaggio(id_utente, id_mittente, txt_msg);
 			sm.getSession().save(messaggio);
 			
 			sm.getSession().getTransaction().commit();

@@ -33,7 +33,7 @@ public class MsgMedico extends HttpServlet {
 		List <Integer> IdMedici = DaoUtente.getIdMediciZona(client.getId_zona_lav());
 		for(Integer x : IdMedici)
 		{
-		DaoMessaggio.createMessaggio(x,msg); //manda un messaggio a tutti gli id dei medici della zona 		
+		DaoMessaggio.createMessaggio(x, client.getId(), msg); //manda un messaggio a tutti gli id dei medici della zona 		
 		}
 	response.sendRedirect("Comune.jsp?status=inviato");
 		

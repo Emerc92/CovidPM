@@ -21,11 +21,11 @@ public class DaoUtente {
 	// ritorna l'istanza di utente del database, altrimenti ritorna null
 	public static Utente login(String username, String password) {
 		try {
-			sm.open(); //apre una session creata dalla "sessionFactory"
+			sm.open();
 			Utente utente = (Utente) sm.getSession().createQuery("FROM Utente WHERE username = :username AND password = :password")
 							.setParameter("username", username)
 							.setParameter("password", password)
-							.getSingleResult(); //ritorna un risultato singolo o lancia un eccezione!
+							.getSingleResult();
 			
 			return utente;
 					
@@ -34,7 +34,7 @@ public class DaoUtente {
 			return null;
 			
 		} finally {
-			sm.close(); //chiude la session 
+			sm.close();
 		}
 	}
 	
@@ -232,6 +232,26 @@ public class DaoUtente {
 		} catch(Exception e) {
 			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
 			return -1;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	// Ricerca di utente tramite id (unico). Se c'è una corrispondenza,
+	// ritorna l'istanza di utente del database, altrimenti ritorna null
+	public static Utente getUtenteId(int id) {
+		try {
+			sm.open();
+			Utente utente = (Utente) sm.getSession().createQuery("FROM Utente WHERE id = :id")
+							.setParameter("id", id)
+							.getSingleResult();
+			
+			return utente;
+					
+		} catch(NoResultException e) {
+			System.out.println("Nessun utente con tali dati nel database.");
+			return null;
 			
 		} finally {
 			sm.close();

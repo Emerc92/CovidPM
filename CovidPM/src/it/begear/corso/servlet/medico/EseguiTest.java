@@ -30,7 +30,7 @@ public class EseguiTest extends HttpServlet {
     private void msgOperatore(Utente client, int tamponiEseguiti,int nPositivi,int nNegativi) {
     	 int idOperatoreZona = DaoUtente.getIdOperatoreZona(client.getId_zona_lav());
     	    String messaggioOperatore = "Abbiamo eseguito " + tamponiEseguiti +" tamponi e abbiamo trovato " + nPositivi + " utenti positivi e " + nNegativi + " utenti negativi";
-    	    DaoMessaggio.createMessaggio(idOperatoreZona, messaggioOperatore);
+    	    DaoMessaggio.createMessaggio(idOperatoreZona, client.getId(), messaggioOperatore);
     }
     
     private void updateZona(Utente client) {
@@ -79,7 +79,7 @@ public class EseguiTest extends HttpServlet {
 		      
 		      DaoUtente.updateStatus(paziente.getId(), status);
 		      String messaggioPaziente = "T'abbiamo testato e sei " + status.toLowerCase();
-		      DaoMessaggio.createMessaggio(paziente.getId(), messaggioPaziente); //manda un messaggio al paziente
+		      DaoMessaggio.createMessaggio(paziente.getId(), client.getId(), messaggioPaziente); //manda un messaggio al paziente
 		      
 		      utentiNonPositivi.remove(paziente); //rimuovi paziente dalla lista di controllo del while
 		      

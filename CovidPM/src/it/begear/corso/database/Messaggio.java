@@ -19,13 +19,17 @@ public class Messaggio {
 	@Column(name = "id_utente")
 	private int id_utente;
 	
+	@Column(name = "id_mittente")
+	private int id_mittente;
+	
 	@Column(name = "txt_msg")
 	private String txt_msg;
 
 	public Messaggio() {}
 
-	public Messaggio(int id_utente, String txt_msg) {
+	public Messaggio(int id_utente, int id_mittente, String txt_msg) {
 		this.id_utente = id_utente;
+		this.id_mittente = id_mittente;
 		this.txt_msg = txt_msg;
 	}
 
@@ -35,6 +39,10 @@ public class Messaggio {
 
 	public int getId_utente() {
 		return id_utente;
+	}
+	
+	public int getId_mittente() {
+		return id_mittente;
 	}
 
 	public String getTxt_msg() {
@@ -47,6 +55,10 @@ public class Messaggio {
 
 	public void setId_utente(int id_utente) {
 		this.id_utente = id_utente;
+	}
+	
+	public void setId_mittente(int id_mittente) {
+		this.id_mittente = id_mittente;
 	}
 
 	public void setTxt_msg(String txt_msg) {
