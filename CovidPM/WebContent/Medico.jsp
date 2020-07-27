@@ -4,6 +4,10 @@
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <%@ page import="it.begear.corso.database.DaoUtente"%>
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
+<%@ page import="it.begear.corso.database.Messaggio"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
+<%@ page import="java.util.List"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,8 +43,17 @@
 		<p id="fraseVisualilizzaMsg">Visualizza messaggi</p>
 		<input type="submit" value="Submit">
 	</form>
-	<%  if (accesso != null && accesso.equals("visualizzati")) {%>
-	<font color="red"> I messaggi sono stati visualizzati!</font>
-	<% } %>
+	 <%  if (accesso != null && accesso.equals("visualizzati")) {
+	 List<Messaggio> messaggi = (List) session.getAttribute("messages");
+	 for(Messaggio msg : messaggi){
+		 Utente x = DaoUtente.getUtenteId(msg.getId_mittente());
+		 String name = x.getNome();
+		 String surname = x.getCognome();
+		 String type = x.getTipo();
+		 String txt = msg.getTxt_msg();
+		 out.println(name + " " + surname + " " + type);
+		 out.println("messaggio: '" + txt + "'");
+	 }
+ } %>
 </body>
 </html>

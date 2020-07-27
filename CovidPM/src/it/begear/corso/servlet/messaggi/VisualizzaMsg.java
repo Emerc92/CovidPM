@@ -29,10 +29,9 @@ public class VisualizzaMsg extends HttpServlet {
 		Utente utente = (Utente) session.getAttribute("client");
 		//ottiene messaggi del client
 		List<Messaggio> messaggi = DaoMessaggio.getMessaggiUtente(utente);
-		for(Messaggio txt: messaggi)
-		{
-			System.out.println(txt.getTxt_msg());
-		}
+		session.setAttribute("messages", messaggi);
+		
+	
 		if(utente.getTipo().equals("Operatore")) {
 			response.sendRedirect("Comune.jsp?status=visualizzati");
 			}
