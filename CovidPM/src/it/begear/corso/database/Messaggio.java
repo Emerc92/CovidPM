@@ -22,14 +22,18 @@ public class Messaggio {
 	@Column(name = "id_mittente")
 	private int id_mittente;
 	
+	@Column(name = "giorno")
+	private int giorno;
+	
 	@Column(name = "txt_msg")
 	private String txt_msg;
 
 	public Messaggio() {}
 
-	public Messaggio(int id_utente, int id_mittente, String txt_msg) {
+	public Messaggio(int id_utente, int id_mittente, int giorno, String txt_msg) {
 		this.id_utente = id_utente;
 		this.id_mittente = id_mittente;
+		this.giorno = giorno;
 		this.txt_msg = txt_msg;
 	}
 
@@ -43,6 +47,10 @@ public class Messaggio {
 	
 	public int getId_mittente() {
 		return id_mittente;
+	}
+	
+	public int getGiorno() {
+		return giorno;
 	}
 
 	public String getTxt_msg() {
@@ -59,6 +67,10 @@ public class Messaggio {
 	
 	public void setId_mittente(int id_mittente) {
 		this.id_mittente = id_mittente;
+	}
+	
+	public void setGiorno(int giorno) {
+		this.giorno = giorno;
 	}
 
 	public void setTxt_msg(String txt_msg) {

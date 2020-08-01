@@ -33,11 +33,16 @@ public class DaoMessaggio {
 	// Ritorna true se il messaggio viene creato, altrimenti false
 	public static boolean createMessaggio(int id_utente, int id_mittente, String txt_msg) {
 		
+		// estrae il giorno corrente dalla tabella generale
+		// per salvarlo come giorno di creazione del messaggio
+		Generale generale = DaoGenerale.getGenerale();
+		int giorno = generale.getGiorno();
+		
 		try {
 			sm.open();
 			sm.getSession().beginTransaction();
 			
-			Messaggio messaggio = new Messaggio(id_utente, id_mittente, txt_msg);
+			Messaggio messaggio = new Messaggio(id_utente, id_mittente, giorno, txt_msg);
 			sm.getSession().save(messaggio);
 			
 			sm.getSession().getTransaction().commit();
