@@ -23,12 +23,40 @@ public class DaoGenerale {
 		}
 	}
 	
-	// Aggiorna l'istanza di generale avanzando il giorno corrente e tenendo traccia delle infezioni totali
+	// Aggiorna l'istanza di generale avanzando il giorno corrente
 	// Ritorna true se va a buon fine, false altrimenti
-	public static boolean updateGenerale() {
+	public static boolean updateGiorno() {
 		
 		Generale generale = getGenerale();
 		int giorno = generale.getGiorno() + 1; // passa un giorno
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			// Esegue l'update con i nuovi valori di giorno e di infezioni totali
+			sm.getSession().createSQLQuery("UPDATE Generale SET giorno = :giorno")
+							.setParameter("giorno", giorno)
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'update generale, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	// Aggiorna l'istanza di generale con le nuove infezioni totali
+	// Ritorna true se va a buon fine, false altrimenti
+	public static boolean updateInfetti() {
+		
+		Generale generale = getGenerale();
 		long infetti = DaoInfezione.getNumInfezioni(); // conta le infezioni totali
 		
 		try {
@@ -36,8 +64,7 @@ public class DaoGenerale {
 			sm.getSession().beginTransaction();
 			
 			// Esegue l'update con i nuovi valori di giorno e di infezioni totali
-			sm.getSession().createSQLQuery("UPDATE Generale SET giorno = :giorno , infetti = :infetti")
-							.setParameter("giorno", giorno)
+			sm.getSession().createSQLQuery("UPDATE Generale SET infetti = :infetti")
 							.setParameter("infetti", infetti)
 							.executeUpdate();
 			
