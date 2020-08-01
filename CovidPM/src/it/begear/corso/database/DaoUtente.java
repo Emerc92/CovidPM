@@ -264,7 +264,7 @@ public class DaoUtente {
 	public static boolean createUtente(String nome, String cognome, String genere, int id_zona_res, int id_zona_lav, String tipo) {
 		// Username e password vengono generati randomicamente
 		Random random = new Random();
-		String username = nome.trim() + cognome.trim() + (1000 + random.nextInt(9000)); 
+		String username = nome.trim() + cognome.trim() + (1000 + random.nextInt(9000)) + caratteri[random.nextInt(caratteri.length)]; 
 		String password = createPassword(); 
 		
 		try {
@@ -318,6 +318,47 @@ public class DaoUtente {
 			System.out.println("Errore nella modifica, eseguo un rollback.");
 			sm.getSession().getTransaction().rollback();
 			return false;
+		} finally {
+			sm.close();
+		}
+	}
+	
+	public static boolean resetUtente() {
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createQuery("DELETE FROM Utente")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createSQLQuery("ALTER TABLE Utente AUTO_INCREMENT = 1")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
 		} finally {
 			sm.close();
 		}

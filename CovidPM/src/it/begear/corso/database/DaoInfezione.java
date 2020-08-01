@@ -147,7 +147,7 @@ public class DaoInfezione {
 			sm.getSession().beginTransaction();
 			
 			int giorni_rimasti = infezione.getGiorni_rimasti() - 1;
-			sm.getSession().createSQLQuery("UPDATE Infezione SET giorni_rimasti = :giorni_rimasti WHERE id_utente = :id_utente")
+			sm.getSession().createQuery("UPDATE Infezione SET giorni_rimasti = :giorni_rimasti WHERE id_utente = :id_utente")
 							.setParameter("giorni_rimasti", giorni_rimasti)
 							.setParameter("id_utente", id_utente)
 							.executeUpdate();
@@ -168,11 +168,12 @@ public class DaoInfezione {
 	// Elimina l'infezione associata all'id utente passato (l'utente è guarito)
 	// Ritorna true se l'infezione viene eliminata, false altrimenti
 	public static boolean deleteInfezione(int id_utente) {
+		
 		try {
 			sm.open();
 			sm.getSession().beginTransaction();
 			
-			sm.getSession().createSQLQuery("DELETE FROM Infezione WHERE id_utente = :id_utente")
+			sm.getSession().createQuery("DELETE FROM Infezione WHERE id_utente = :id_utente")
 							.setParameter("id_utente", id_utente)
 							.executeUpdate();
 			
@@ -189,5 +190,45 @@ public class DaoInfezione {
 		}
 	}
 	
-
+	public static boolean resetInfezione() {
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createQuery("DELETE FROM Infezione")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createSQLQuery("ALTER TABLE Infezione AUTO_INCREMENT = 1")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
 }

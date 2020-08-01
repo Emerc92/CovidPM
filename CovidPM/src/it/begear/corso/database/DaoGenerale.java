@@ -35,7 +35,7 @@ public class DaoGenerale {
 			sm.getSession().beginTransaction();
 			
 			// Esegue l'update con i nuovi valori di giorno e di infezioni totali
-			sm.getSession().createSQLQuery("UPDATE Generale SET giorno = :giorno")
+			sm.getSession().createQuery("UPDATE Generale SET giorno = :giorno")
 							.setParameter("giorno", giorno)
 							.executeUpdate();
 			
@@ -64,7 +64,7 @@ public class DaoGenerale {
 			sm.getSession().beginTransaction();
 			
 			// Esegue l'update con i nuovi valori di giorno e di infezioni totali
-			sm.getSession().createSQLQuery("UPDATE Generale SET infetti = :infetti")
+			sm.getSession().createQuery("UPDATE Generale SET infetti = :infetti")
 							.setParameter("infetti", infetti)
 							.executeUpdate();
 			
@@ -73,6 +73,28 @@ public class DaoGenerale {
 			
 		} catch(Exception e) {
 			System.out.println("Errore nell'update generale, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	public static boolean resetGenerale() {
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createQuery("UPDATE Generale SET giorno = 0 , infetti = 0")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
 			sm.getSession().getTransaction().rollback();
 			return false;
 			

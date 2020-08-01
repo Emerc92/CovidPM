@@ -66,7 +66,7 @@ public class DaoMessaggio {
 			sm.open();
 			sm.getSession().beginTransaction();
 			
-			sm.getSession().createSQLQuery("DELETE FROM Messaggio WHERE id_utente = :id_utente")
+			sm.getSession().createQuery("DELETE FROM Messaggio WHERE id_utente = :id_utente")
 			.setParameter("id_utente", id_utente)
 			.executeUpdate();
 
@@ -75,6 +75,47 @@ public class DaoMessaggio {
 		} catch(Exception e) {
 			sm.getSession().getTransaction().rollback();
 			System.out.println("Errore nell'eliminazione di messaggi, eseguo un rollback.");
+		} finally {
+			sm.close();
+		}
+	}
+	
+	public static boolean resetMessaggio() {
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createQuery("DELETE FROM Messaggio")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			sm.getSession().createSQLQuery("ALTER TABLE Messaggio AUTO_INCREMENT = 1")
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
 		} finally {
 			sm.close();
 		}
