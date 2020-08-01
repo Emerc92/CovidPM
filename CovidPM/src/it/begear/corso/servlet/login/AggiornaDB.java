@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.begear.corso.database.DaoGenerale;
 import it.begear.corso.database.DaoInfezione;
+import it.begear.corso.database.DaoMessaggio;
 import it.begear.corso.database.DaoUtente;
 import it.begear.corso.database.Utente;
 
@@ -28,16 +30,43 @@ public class AggiornaDB extends HttpServlet {
 		List<Float> percInfezioniZone = getPercInfezioniPerZona(); //per ognuna delle 20 regioni ottiene la percentuale di infettività
 		List<Utente> utenti = DaoUtente.getListaUtenti();          //lista utenti presenti nel DB
 
+		
+		DaoGenerale.updateGiorno(); // facciamo avanzare di un giorno la tabella generale
+		
 		for(Utente u : utenti) {
 			if(!DaoInfezione.searchInfezione(u.getId())) { //se l'utente non è infetto...
                 //calcolo percentuale infettività come media tra (probabilità di infezione ZonaRes + probabilità di infezione ZonaLav)/2
 				float percUtente = (float) (percInfezioniZone.get(u.getId_zona_res() - 1) + percInfezioniZone.get(u.getId_zona_lav() - 1) / 2); 
 				
 				if(rollInfezione(percUtente)) {              //se si infetta
-					DaoInfezione.createInfezione(u.getId()); //aggiungilo alla tabella degli infetti
+					DaoInfezione.createInfezione(u.getId()); //aggiungilo alla tabella degli infetti (tempo di guarigione 10 giorni)
+				}
+			} else { // se l'utente è infetto...
+				// togliamo uno ai giorni rimasti alla guarigione
+				int giorni_rimasti = DaoInfezione.updateInfezione(u.getId());
+				
+				if(giorni_rimasti == 0) { // se l'utente è guarito...
+					
+					DaoInfezione.deleteInfezione(u.getId()); // elimina l'infezione
+					
+					if(u.getStatus().equals("Positivo")) { // se l'utente era risultato positivo viene monitorato giorno per giorno
+						DaoUtente.updateStatus(u.getId(), "Negativo"); // cambia status in negativo
+						
+						// creazione e invio del messaggio di guarigione dall'operatore che lavora nella zona
+						// in cui l'utente guarito (destinatario) risiede
+						int idOperatore = DaoUtente.getIdOperatoreZona(u.getId_zona_res());
+						String txt_msg = "Congratulazioni! Nell'ultimo controllo giornaliero sugli utenti positivi lei è risultato/a negativo! "
+								+ "Da oggi (giorno " + DaoGenerale.getGenerale().getGiorno() + ") si può considerare guarito!";
+						DaoMessaggio.createMessaggio(u.getId(), idOperatore, txt_msg);
+					}
+					
 				}
 			}
 		}
+		
+		// aggiorniamo il numero di infetti totali nella tabella generale tramite conta
+		// di infezioni nella tabella infezione
+		DaoGenerale.updateInfetti(); 
 
 		response.sendRedirect("Login.jsp?status=AGGIORNATO");
 
