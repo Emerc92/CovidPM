@@ -16,6 +16,7 @@
 <mapping class="it.begear.corso.database.Zona"/>
 <mapping class="it.begear.corso.database.Infezione"/>
 <mapping class="it.begear.corso.database.Messaggio"/>
+<mapping class="it.begear.corso.database.Generale"/>
 
 </session-factory>
 
