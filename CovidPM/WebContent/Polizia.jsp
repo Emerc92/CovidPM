@@ -55,6 +55,7 @@
 	 for(Messaggio msg : messaggi){
 		 Utente x = DaoUtente.getUtenteId(msg.getId_mittente());
 		 //ecco la schiera di elementi da utilizzare per visualizzare i messaggi
+		 int giorno = msg.getGiorno();
 		 String name = x.getNome();
 		 String surname = x.getCognome();
 		 String type = x.getTipo();

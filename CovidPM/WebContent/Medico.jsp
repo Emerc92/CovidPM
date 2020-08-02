@@ -47,6 +47,7 @@
 	 List<Messaggio> messaggi = (List) session.getAttribute("messages");
 	 for(Messaggio msg : messaggi){
 		 Utente x = DaoUtente.getUtenteId(msg.getId_mittente());
+		 int giorno = msg.getGiorno();
 		 String name = x.getNome();
 		 String surname = x.getCognome();
 		 String type = x.getTipo();
