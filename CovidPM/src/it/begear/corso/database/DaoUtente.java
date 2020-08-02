@@ -202,7 +202,7 @@ public class DaoUtente {
 				
 				try {
 					// aggiungiamo alla lista il risultato della funzione COUNT()
-					// di utenti che risiedono o lavorano in tale zona
+					// di utenti che risiedono in tale zona
 					utentiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona")
 							.setParameter("numeroZona", numeroZona)
 							.getSingleResult());
@@ -214,6 +214,117 @@ public class DaoUtente {
 			}
 			
 			return utentiPerZona;
+					
+		} catch(Exception e) {
+			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
+			return null;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	// Ritorna una lista contenente il numero di utenti positivi per zona (indici 0-19 per le zone 1-20)
+	// NB: conta solo gli utenti che risiedono in tale zona
+	public static List<Long> getNumPositiviPerZonaRes() {
+		List<Long> positiviPerZona = new ArrayList<Long>(); // lista da ritornare
+		
+		try {
+			sm.open();
+			
+			// ciclo for che itera le 20 zone 
+			for(int i = 0; i < 20; i++) {
+				int numeroZona = i + 1;
+				
+				try {
+					// aggiungiamo alla lista il risultato della funzione COUNT()
+					// di utenti positivi che risiedono in tale zona
+					positiviPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona AND status = :status")
+							.setParameter("numeroZona", numeroZona)
+							.setParameter("status", "Positivo")
+							.getSingleResult());
+				} catch (Exception e) {
+					// in caso di nessun utente aggiungiamo 0
+					positiviPerZona.add(0L);
+				}
+				
+			}
+			
+			return positiviPerZona;
+					
+		} catch(Exception e) {
+			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
+			return null;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	// Ritorna una lista contenente il numero di utenti negativi per zona (indici 0-19 per le zone 1-20)
+	// NB: conta solo gli utenti che risiedono in tale zona
+	public static List<Long> getNumNegativiPerZonaRes() {
+		List<Long> negativiPerZona = new ArrayList<Long>(); // lista da ritornare
+		
+		try {
+			sm.open();
+			
+			// ciclo for che itera le 20 zone 
+			for(int i = 0; i < 20; i++) {
+				int numeroZona = i + 1;
+				
+				try {
+					// aggiungiamo alla lista il risultato della funzione COUNT()
+					// di utenti negativi che risiedono in tale zona
+					negativiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona AND status = :status")
+							.setParameter("numeroZona", numeroZona)
+							.setParameter("status", "Negativo")
+							.getSingleResult());
+				} catch (Exception e) {
+					// in caso di nessun utente aggiungiamo 0
+					negativiPerZona.add(0L);
+				}
+				
+			}
+			
+			return negativiPerZona;
+					
+		} catch(Exception e) {
+			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
+			return null;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	// Ritorna una lista contenente il numero di utenti non testati per zona (indici 0-19 per le zone 1-20)
+	// NB: conta solo gli utenti che risiedono in tale zona
+	public static List<Long> getNumNonTestatiPerZonaRes() {
+		List<Long> nonTestatiPerZona = new ArrayList<Long>(); // lista da ritornare
+		
+		try {
+			sm.open();
+			
+			// ciclo for che itera le 20 zone 
+			for(int i = 0; i < 20; i++) {
+				int numeroZona = i + 1;
+				
+				try {
+					// aggiungiamo alla lista il risultato della funzione COUNT()
+					// di utenti non testati che risiedono in tale zona
+					nonTestatiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona AND status = :status")
+							.setParameter("numeroZona", numeroZona)
+							.setParameter("status", "Non Testato")
+							.getSingleResult());
+				} catch (Exception e) {
+					// in caso di nessun utente aggiungiamo 0
+					nonTestatiPerZona.add(0L);
+				}
+				
+			}
+			
+			return nonTestatiPerZona;
 					
 		} catch(Exception e) {
 			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
