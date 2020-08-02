@@ -53,9 +53,45 @@ public class DaoInfezione {
 				try {
 					// aggiungiamo alla lista il risultato della funzione COUNT()
 					// di utenti infetti che risiedono o lavorano in tale zona
-					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente u INNER JOIN Infezione i ON u.id = i.id_utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
+					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(username) FROM Utente u INNER JOIN Infezione i ON u.id = i.id_utente WHERE id_zona_res = :numeroZona OR id_zona_lav = :numeroZona2")
 							.setParameter("numeroZona", numeroZona)
 							.setParameter("numeroZona2", numeroZona2)
+							.getSingleResult());
+				} catch (Exception e) {
+					// in caso di nessun infetto aggiungiamo 0
+					infettiPerZona.add(0L);
+				}
+				
+			}
+			
+			return infettiPerZona;
+	
+		} catch(Exception e) {
+			System.out.println("Errore durante la raccolta di informazioni sulle infezioni.");
+			return null;
+			
+		} finally {
+			sm.close();
+		}
+	}
+	
+	// Ritorna una lista contenente il numero di infetti per zona (indici 0-19 per le zone 1-20)
+	// NB: conta solo gli utenti che risiedono in tale zona
+	public static List<Long> getNumInfezioniPerZonaRes() {
+		List<Long> infettiPerZona = new ArrayList<Long>(); // lista da ritornare
+		
+		try {
+			sm.open();
+			
+			// ciclo for che itera le 20 zone 
+			for(int i = 0; i < 20; i++) {
+				int numeroZona = i + 1;
+				
+				try {
+					// aggiungiamo alla lista il risultato della funzione COUNT()
+					// di utenti infetti che risiedono o lavorano in tale zona
+					infettiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(username) FROM Utente u INNER JOIN Infezione i ON u.id = i.id_utente WHERE id_zona_res = :numeroZona")
+							.setParameter("numeroZona", numeroZona)
 							.getSingleResult());
 				} catch (Exception e) {
 					// in caso di nessun infetto aggiungiamo 0
