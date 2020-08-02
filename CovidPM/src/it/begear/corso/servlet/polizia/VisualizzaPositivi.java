@@ -31,11 +31,9 @@ public class VisualizzaPositivi extends HttpServlet {
 		List <Utente> listaPositivi = DaoUtente.getPositiviZona(client.getId_zona_lav());
 		session.setAttribute("listaPositivi", listaPositivi);
 		
-		for(Utente u: listaPositivi) {
-			System.out.println(u.getNome() + " " + u.getCognome());
-		}
+		if(listaPositivi.isEmpty() || listaPositivi== null) response.sendRedirect("Polizia.jsp?status=vuotaPositivi");
+		else response.sendRedirect("Polizia.jsp?status=visualizza");
 		
-		response.sendRedirect("Polizia.jsp?status=visualizza");
 	}
 
 }

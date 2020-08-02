@@ -30,13 +30,10 @@ public class ControllaUtente extends HttpServlet {
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		List<Utente> listUtenti = DaoUtente.getUtentiNomeCognome(nome, cognome);
-		session.setAttribute("listaUT", listUtenti);
-
-		for(Utente u: listUtenti) {
-			System.out.println(u.getNome() + " " + u.getCognome());
-		}
+		session.setAttribute("listaUT", listUtenti); // passiamo la lista utenti alla sessione per richiamarla nella pagina jsp
 		
-		response.sendRedirect("Polizia.jsp?status=controllo");
+		if(listUtenti.isEmpty() || listUtenti== null) response.sendRedirect("Polizia.jsp?status=vuota");
+		else response.sendRedirect("Polizia.jsp?status=controllo");
 	}
 
 }
