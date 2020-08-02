@@ -188,6 +188,41 @@ public class DaoUtente {
 		}
 	}
 	
+	// Ritorna una lista contenente il numero di utenti per zona (indici 0-19 per le zone 1-20)
+	// NB: conta solo gli utenti che risiedono in tale zona
+	public static List<Long> getNumUtentiPerZonaRes() {
+		List<Long> utentiPerZona = new ArrayList<Long>(); // lista da ritornare
+		
+		try {
+			sm.open();
+			
+			// ciclo for che itera le 20 zone 
+			for(int i = 0; i < 20; i++) {
+				int numeroZona = i + 1;
+				
+				try {
+					// aggiungiamo alla lista il risultato della funzione COUNT()
+					// di utenti che risiedono o lavorano in tale zona
+					utentiPerZona.add((Long) sm.getSession().createQuery("SELECT COUNT(nome) FROM Utente WHERE id_zona_res = :numeroZona")
+							.setParameter("numeroZona", numeroZona)
+							.getSingleResult());
+				} catch (Exception e) {
+					// in caso di nessun utente aggiungiamo 0
+					utentiPerZona.add(0L);
+				}
+				
+			}
+			
+			return utentiPerZona;
+					
+		} catch(Exception e) {
+			System.out.println("Errore durante la raccolta di informazioni sugli utenti.");
+			return null;
+			
+		} finally {
+			sm.close();
+		}
+	}
 	
 	// Ritorna la lista degli id dei medici che lavora in tale zona
 	// Se non vi sono medici ritorna null
@@ -260,8 +295,8 @@ public class DaoUtente {
 	
 	
 	// Creazione utente da parte dell'operatore
-	// Ritorna true se l'utente viene creato, altrimenti false
-	public static boolean createUtente(String nome, String cognome, String genere, int id_zona_res, int id_zona_lav, String tipo) {
+	// Ritorna l'istanza di utente se l'utente viene creato, altrimenti null
+	public static Utente createUtente(String nome, String cognome, String genere, int id_zona_res, int id_zona_lav, String tipo) {
 		// Username e password vengono generati randomicamente
 		Random random = new Random();
 		String username = nome.trim() + cognome.trim() + (1000 + random.nextInt(9000)) + caratteri[random.nextInt(caratteri.length)]; 
@@ -275,12 +310,12 @@ public class DaoUtente {
 			sm.getSession().save(utente);
 			
 			sm.getSession().getTransaction().commit();
-			return true;
+			return utente;
 			
 		} catch(Exception e) {
 			System.out.println("Errore nell'inserimento, eseguo un rollback.");
 			sm.getSession().getTransaction().rollback();
-			return false;
+			return null;
 			
 		} finally {
 			sm.close();
