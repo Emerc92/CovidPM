@@ -2,6 +2,9 @@
     pageEncoding="ISO-8859-1"%>
  <%@ page import="it.begear.corso.database.Generale"%>
  <%@ page import="it.begear.corso.database.DaoGenerale"%>
+ <%@ page import="java.util.List"%>
+ <%@ page import="it.begear.corso.database.DaoUtente"%>
+ <%@ page import="it.begear.corso.database.DaoInfezione"%>
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <!DOCTYPE html>
 <html>
@@ -32,6 +35,10 @@
 		%></p>
 		<input type="submit" value="Avanza giorno">
     </form>
+   <%  
+    List<Long> numUtentiPerZonaRes = DaoUtente.getNumUtentiPerZonaRes();
+	List<Long> numInfezioniPerZonaRes = DaoInfezione.getNumInfezioniPerZonaRes();
+	%>
 <!-- nella servlet Login controlliamo l'username e la password inseriti e,
 in caso negativo, ricarica la pagina cambiando la var "status" con valore stringa "denied",TRAMITE URL -->	
 

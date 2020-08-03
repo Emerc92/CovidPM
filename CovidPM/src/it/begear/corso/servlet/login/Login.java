@@ -44,6 +44,9 @@ public class Login extends HttpServlet {
 		else if( client.getTipo().equals("Medico")){
 			response.sendRedirect("Medico.jsp");	
 		}
+		else if( client.getTipo().equals("Cittadino")){
+			response.sendRedirect("Cittadino.jsp");	
+		}
 		}
 		
 		
