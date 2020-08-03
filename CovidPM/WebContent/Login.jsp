@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ <%@ page import="it.begear.corso.database.Generale"%>
+ <%@ page import="it.begear.corso.database.DaoGenerale"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,10 +26,13 @@
 	</form>
 <!-- Servlet AggiornaDB -->	
 	<form action="AggiornaDB" method="post">
-		<p id="frase">01/03/2020</p>
-		<input type="submit" value="Aggiorna">
+		<p id="frase"><% 
+		int giorno = DaoGenerale.getGenerale().getGiorno();
+		out.println("giorno " + giorno);
+		%></p>
+		<input type="submit" value="Avanza giorno">
     </form>
-<!-- nella servlet Acchiappa controlliamo l'username e la password inseriti e,
+<!-- nella servlet Login controlliamo l'username e la password inseriti e,
 in caso negativo, ricarica la pagina cambiando la var "status" con valore stringa "denied",TRAMITE URL -->	
 
 <!-- otteniamo il valore della variabile "status"  -->	
@@ -34,6 +40,10 @@ in caso negativo, ricarica la pagina cambiando la var "status" con valore string
            if (accesso != null && accesso.equals("DENIED")) {%>
 		<font color="red"> Username o Password non valide!</font>
 		<% } %>
-	
+
+<!-- Servlet ResetDB -->	
+	<form action="ResetDB" method="post">
+		<input type="submit" value="Reset Database">
+    </form>	
 </body>
 </html>
