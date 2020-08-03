@@ -7,6 +7,7 @@
 <%@ page import="it.begear.corso.database.Messaggio"%>
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <%@ page import="it.begear.corso.database.DaoMessaggio"%>
+<%@ page import="it.begear.corso.database.DaoZona"%>
 <%@ page import="java.util.List"%>
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <!DOCTYPE html>
@@ -382,7 +383,7 @@ $("#messaggi").click(function(){
 		  cancelButtonColor: '#d33',
 		  confirmButtonText: 'Si, cancella tutto!'
 		}).then((result) => {
-		  if (result.value) {
+		  if(result.value) {
 		    swal(
 		      'Cancellati!',
 		      'i messaggi sono stati cancellati.',
@@ -504,6 +505,204 @@ $("#messaggi").click(function(){
 				onmouseout="document.Italia.src='images/cartina_italia.png';" />
 		</map>
 	</div>
+<% 
+List<Long> numUtentiPerZonaRes = DaoUtente.getNumUtentiPerZonaRes();
+List<Long> numPositiviPerZonaRes = DaoUtente.getNumPositiviPerZonaRes();
+List<Long> numNegativiPerZonaRes = DaoUtente.getNumNegativiPerZonaRes();
+List<Long> numNonTestatiPerZonaRes = DaoUtente.getNumNonTestatiPerZonaRes();
+List<String> allerte = DaoZona.getAllerte();
+Long utentiRegione;
+Long positiviRegione;
+Long negativiRegione;
+Long nonTestatiRegione;
+String allerta;
+String regione;
+if (accesso != null){
+	switch(accesso){
+	case "abruzzo":
+		utentiRegione = numUtentiPerZonaRes.get(0);
+		positiviRegione = numPositiviPerZonaRes.get(0);
+		negativiRegione = numNegativiPerZonaRes.get(0);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(0);
+		allerta = allerte.get(0);
+		regione = "abruzzo";
+		break;
+	case "basilicata":
+		utentiRegione = numUtentiPerZonaRes.get(1);
+		positiviRegione = numPositiviPerZonaRes.get(1);
+		negativiRegione = numNegativiPerZonaRes.get(1);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(1);
+		allerta = allerte.get(1);
+		regione = "basilicata";
+		break;
+	case "calabria":
+		utentiRegione = numUtentiPerZonaRes.get(2);
+		positiviRegione = numPositiviPerZonaRes.get(2);
+		negativiRegione = numNegativiPerZonaRes.get(2);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(2);
+		allerta = allerte.get(2);
+		regione = "calabria";
 
+		break;
+	case "campania":
+		utentiRegione = numUtentiPerZonaRes.get(3);
+		positiviRegione = numPositiviPerZonaRes.get(3);
+		negativiRegione = numNegativiPerZonaRes.get(3);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(3);
+		allerta = allerte.get(3);
+		regione = "campania";
+
+		break;
+	case "emilia":
+		utentiRegione = numUtentiPerZonaRes.get(4);
+		positiviRegione = numPositiviPerZonaRes.get(4);
+		negativiRegione = numNegativiPerZonaRes.get(4);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(4);
+		allerta = allerte.get(4);
+		regione = "emilia";
+		break;
+	case "friuli":
+		utentiRegione = numUtentiPerZonaRes.get(5);
+		positiviRegione = numPositiviPerZonaRes.get(5);
+		negativiRegione = numNegativiPerZonaRes.get(5);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(5);
+		allerta = allerte.get(5);
+		regione = "friuli";
+		break;
+	case "lazio":
+		utentiRegione = numUtentiPerZonaRes.get(6);
+		positiviRegione = numPositiviPerZonaRes.get(6);
+		negativiRegione = numNegativiPerZonaRes.get(6);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(6);
+		allerta = allerte.get(6);
+		regione = "lazio";
+		break;
+	case "liguria":
+		utentiRegione = numUtentiPerZonaRes.get(7);
+		positiviRegione = numPositiviPerZonaRes.get(7);
+		negativiRegione = numNegativiPerZonaRes.get(7);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(7);
+		allerta = allerte.get(7);
+		regione = "liguria";
+		break;
+	case "lombardia":
+		utentiRegione = numUtentiPerZonaRes.get(8);
+		positiviRegione = numPositiviPerZonaRes.get(8);
+		negativiRegione = numNegativiPerZonaRes.get(8);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(8);
+		allerta = allerte.get(8);
+		regione = "lombardia";
+		break;
+	case "marche":
+		utentiRegione = numUtentiPerZonaRes.get(9);
+		positiviRegione = numPositiviPerZonaRes.get(9);
+		negativiRegione = numNegativiPerZonaRes.get(9);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(9);
+		allerta = allerte.get(9);
+		regione = "marche";
+		break;
+	case "molise":
+		utentiRegione = numUtentiPerZonaRes.get(10);
+		positiviRegione = numPositiviPerZonaRes.get(10);
+		negativiRegione = numNegativiPerZonaRes.get(10);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(10);
+		allerta = allerte.get(10);
+		regione = "molise";
+		break;
+	case "piemonte":
+		utentiRegione = numUtentiPerZonaRes.get(11);
+		positiviRegione = numPositiviPerZonaRes.get(11);
+		negativiRegione = numNegativiPerZonaRes.get(11);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(11);
+		allerta = allerte.get(11);
+		regione = "piemonte";
+		break;
+	case "puglia":
+		utentiRegione = numUtentiPerZonaRes.get(12);
+		positiviRegione = numPositiviPerZonaRes.get(12);
+		negativiRegione = numNegativiPerZonaRes.get(12);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(12);
+		allerta = allerte.get(12);
+		regione = "puglia";
+		break;
+	case "sardegna":
+		utentiRegione = numUtentiPerZonaRes.get(13);
+		positiviRegione = numPositiviPerZonaRes.get(13);
+		negativiRegione = numNegativiPerZonaRes.get(13);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(13);
+		allerta = allerte.get(13);
+		regione = "sardegna";
+		break;
+	case "sicilia":
+		utentiRegione = numUtentiPerZonaRes.get(14);
+		positiviRegione = numPositiviPerZonaRes.get(14);
+		negativiRegione = numNegativiPerZonaRes.get(14);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(14);
+		allerta = allerte.get(14);
+		regione = "sicilia";
+		break;
+	case "toscana":
+		utentiRegione = numUtentiPerZonaRes.get(15);
+		positiviRegione = numPositiviPerZonaRes.get(15);
+		negativiRegione = numNegativiPerZonaRes.get(15);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(15);
+		allerta = allerte.get(15);
+		regione = "toscana";
+		break;
+	case "trentino":
+		utentiRegione = numUtentiPerZonaRes.get(16);
+		positiviRegione = numPositiviPerZonaRes.get(16);
+		negativiRegione = numNegativiPerZonaRes.get(16);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(16);
+		allerta = allerte.get(16);
+		regione = "trentino";
+		break;
+	case "umbria":
+		utentiRegione = numUtentiPerZonaRes.get(17);
+		positiviRegione = numPositiviPerZonaRes.get(17);
+		negativiRegione = numNegativiPerZonaRes.get(17);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(17);
+		allerta = allerte.get(17);
+		regione = "umbria";
+		break;
+	case "valdaosta":
+		utentiRegione = numUtentiPerZonaRes.get(18);
+		positiviRegione = numPositiviPerZonaRes.get(18);
+		negativiRegione = numNegativiPerZonaRes.get(18);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(18);
+		allerta = allerte.get(18);
+		regione = "valdaosta";
+		break;
+	case "veneto":
+		utentiRegione = numUtentiPerZonaRes.get(19);
+		positiviRegione = numPositiviPerZonaRes.get(19);
+		negativiRegione = numNegativiPerZonaRes.get(19);
+		nonTestatiRegione = numNonTestatiPerZonaRes.get(19);
+		allerta = allerte.get(19);
+		regione = "veneto";
+		break;
+	default:
+		out.println("errore nella mappa");
+		utentiRegione = null;
+		positiviRegione = null;
+		negativiRegione = null;
+		nonTestatiRegione = null;
+		allerta = null;
+		regione = null;
+
+	}
+	
+	
+		
+out.println("<div class ="+'"'+allerta+ " def"+'"'+">");
+out.println("<h1>"+regione+"</h1>");
+out.println("numero abitanti : "+utentiRegione+"<br>");
+out.println(" Tamponi  : "+(utentiRegione-nonTestatiRegione)+"<br>");
+out.println(" positivi  : "+positiviRegione+"<br>");
+out.println(" negativi  : "+negativiRegione+"<br>");
+out.println("</div>");
+
+}
+%> 
 </body>
 </html>
