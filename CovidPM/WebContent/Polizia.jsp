@@ -24,17 +24,34 @@
 		<input type="submit" value="Submit">
 	</form>
 	<% String accesso = request.getParameter("status"); 
-           if (accesso != null && accesso.equals("controllo")) {%>
-	<font color="red"> Controllo Utente!</font>
-	<% } %>
+           if (accesso != null && accesso.equals("controllo")) {
+        	   List<Utente> lista = (List<Utente>)session.getAttribute("listaUT");
+        	   for(Utente u : lista){
+        		   out.println(u.getNome() + " " + u.getCognome() + " status: " + u.getStatus());    		   
+        	   }
+        	 
+           }
+           else if (accesso != null && accesso.equals("vuota")){
+        	   out.println("La persona non è stata trovata nel database");
+           }
+           
+           %>
 	<!-- Servlet VisualizzaPositivi -->
 	<form action="VisualizzaPositivi" method="post">
 		<p id="frase">Visualizza positivi Regione</p>
 		<input type="submit" value="Submit">
 	</form>
-	<%   if (accesso != null && accesso.equals("visualizza")) {%>
-	<font color="red"> Lista dei positivi!</font>
-	<% } %>
+	<%   if (accesso != null && accesso.equals("visualizza")) {
+      	   List<Utente> listaPos = (List<Utente>)session.getAttribute("listaPositivi");
+      	   for(Utente u : listaPos){
+      		   out.println(u.getNome() + " " + u.getCognome() + " status: " + u.getStatus());    		   
+      	   }
+      	 
+         }
+         else if (accesso != null && accesso.equals("vuotaPositivi")){
+      	   out.println("Non esistono positivi nella zona");
+         }
+	  %>
 
 	<!-- Servlet EliminaMsg -->
 	<form action="EliminaMsg" method="post">
@@ -55,6 +72,7 @@
 	 for(Messaggio msg : messaggi){
 		 Utente x = DaoUtente.getUtenteId(msg.getId_mittente());
 		 //ecco la schiera di elementi da utilizzare per visualizzare i messaggi
+		 int giorno = msg.getGiorno();
 		 String name = x.getNome();
 		 String surname = x.getCognome();
 		 String type = x.getTipo();

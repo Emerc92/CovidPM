@@ -29,4 +29,29 @@ public class DaoZona {
 			sm.close();
 		}
 	}
+	
+	public static boolean resetZona() {
+		
+		try {
+			sm.open();
+			sm.getSession().beginTransaction();
+			
+			String allerta = "Verde";
+			
+			sm.getSession().createQuery("UPDATE Zona SET allerta = :allerta")
+							.setParameter("allerta", allerta)
+							.executeUpdate();
+			
+			sm.getSession().getTransaction().commit();
+			return true;
+			
+		} catch(Exception e) {
+			System.out.println("Errore nell'eliminazione, eseguo un rollback.");
+			sm.getSession().getTransaction().rollback();
+			return false;
+			
+		} finally {
+			sm.close();
+		}
+	}
 }
