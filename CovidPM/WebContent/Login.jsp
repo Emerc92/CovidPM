@@ -117,12 +117,12 @@
 							<form action="AggiornaDB" method="post">
 								<input name="submit" type="submit" id="aggiornadb"
 									class="btn btn-primary btn-user btn-block"
-									value="Aggiorna Data Base" />
+									value="Aggiorna DataBase" />
 								</form>	
 							<form action="ResetDB" method="post">
 								<input name="submit" type="submit" id="resetdb"
 									class="btn btn-primary btn-user btn-block"
-									value="Resetta Data Base" style="margin-left:250px; margin-top:	-35px;"/>
+									value="Resetta DataBase" style="margin-left:250px; margin-top:	-35px;"/>
 							</form>
 								<%
 										String accessodb = request.getParameter("status");

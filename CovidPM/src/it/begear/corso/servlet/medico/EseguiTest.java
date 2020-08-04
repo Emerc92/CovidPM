@@ -78,7 +78,7 @@ public class EseguiTest extends HttpServlet {
 		      }
 		      
 		      DaoUtente.updateStatus(paziente.getId(), status);
-		      String messaggioPaziente = "T'abbiamo testato e sei " + status.toLowerCase();
+		      String messaggioPaziente = "Le comunichiamo il risultato del tampone: " + status.toLowerCase();
 		      DaoMessaggio.createMessaggio(paziente.getId(), client.getId(), messaggioPaziente); //manda un messaggio al paziente
 		      
 		      utentiNonPositivi.remove(paziente); //rimuovi paziente dalla lista di controllo del while
