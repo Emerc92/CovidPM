@@ -123,8 +123,7 @@ font-family:
 
 		
 	
-	<!-- Servlet VisualizzaMsg -->
-	<form action="EliminaMsg" id="msj" method="post">
+
 		<div class="container">
 			<div class="modal fade"  id="modalMessaggi">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
@@ -171,12 +170,12 @@ font-family:
 
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-info" data-dismiss='modal'>chiudi</button>
+							<button class="btn btn-info" data-dismiss='modal'>Chiudi</button>
 
 							<div>
-								<input type="submit" data-toggle='modal'
+								<a href="#eliminamsj" type="button" data-toggle='modal'
 									data-target="#EliminaMsj" class="btn btn-danger"
-									id="btnalert" value="Elimina Messaggi">
+									id="btnalert" onclick="alert();">Elimina messaggi </a>
 							</div>
 						</div>
 
@@ -185,8 +184,39 @@ font-family:
 				</div>
 			</div>
 		</div>
+
+	<!-- Servlet EliminaMsg -->
+	<form action="EliminaMsg" id="eliminamsj" method="post">
+		<%@ page errorPage="/"%>
 	</form>
-	
+	<!-- swwt alert per cancellare i messagi -->
+	<script type="text/javascript">
+		function eliminaMessaggi() {
+			console.log("ciao sono nella funzione messaggi");
+			document.getElementById('eliminamsj').submit();
+		}
+
+		$("#eliminamsj").on("submit", function() {
+			window.location.reload();
+
+			return false;
+		})
+
+		function alert() {
+			swal({
+				title : 'sicuro di volere cancellare i messaggi?',
+				text : "una volta cancellati non potrai più vederli",
+				icon : 'warning',
+				showCancelButton : true,
+				confirmButtonColor : '#3085d6',
+				cancelButtonColor : '#d33',
+				confirmButtonText : 'Si, cancella tutto!'
+			}, function() {
+				
+				eliminaMessaggi()
+			});
+		}
+	</script>
 	
 
   <div id="wrapper">
@@ -478,13 +508,12 @@ if (accesso != null){
 		allerta = allerte.get(19);
 		break;
 	default:
-		out.println("errore nella mappa");
-		utentiRegione = null;
-		positiviRegione = null;
-		negativiRegione = null;
-		nonTestatiRegione = null;
-		allerta = null;
-		zona = null;
+		utentiRegione = 0L;
+		positiviRegione = 0L;
+		negativiRegione = 0L;
+		nonTestatiRegione = 0L;
+		allerta = "";
+		zona = "Nessuna Regione Selezionata";
 
 	}
 	

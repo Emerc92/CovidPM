@@ -88,7 +88,7 @@ public class EseguiTest extends HttpServlet {
 		    
 		msgOperatore(client,tamponiEseguiti,nPositivi,nNegativi);// manda messaggio all'operatore con i risultati del test
 		updateZona(client); //aggiorna lo status della zona di lavoro del client: verde,giallo e rosso
-		response.sendRedirect("Medico.jsp?status=test");
+		response.sendRedirect("Medico.jsp?status=testato");
 	}
 
 }

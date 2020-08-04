@@ -36,6 +36,7 @@ public class ResetDB extends HttpServlet {
 		CreaUtenti.crea();
 		InfettaUtenti.infetta();
 		
+		DaoGenerale.updateInfetti(); 
 		response.sendRedirect("Login.jsp?status=RESETTATO");
 	}
 

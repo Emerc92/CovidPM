@@ -23,7 +23,7 @@ public class MsgMedico extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String nTamp = request.getParameter("nTamponi");
+		String nTamp = request.getParameter("nTamp");
 		HttpSession session = request.getSession(); // richiama la sessione se esiste già o ne crea una!!!
 		Utente client = (Utente) session.getAttribute("client"); // prende l'oggetto "client" presente nella sessione
 		
