@@ -196,7 +196,7 @@ font-family:
 		<div class="container">
 			<div class="modal fade" tabindex="-1" id="modalControlla">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
-				<div class="modal-dialog modal-dialog-centered modal-xl" style = "width:1250px">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
 					<div class="modal-content">
 						<div class="modal-header"
 							style="text: center; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Controlla
@@ -212,7 +212,9 @@ font-family:
 												name="cognome" placeholder="Cognome"
 												style="font-family: verdana; font-weight: 900;" required>
 										</div>
+										<br><br>
 										<input class="btn btn-info" type="submit" value= "Carica Dati">
+										
 							<button class="btn btn-info" data-toggle='modal'
 					           data-target="#modalControlla2"> Visualizza Dati </button>
 						</div>
@@ -226,7 +228,7 @@ font-family:
 			</div>
 		</div>
 </form>
-<div class="container">
+
 			<div class="modal fade" tabindex="-1" id="modalControlla2">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
 				<div class="modal-dialog modal-dialog-centered modal-xl">
@@ -238,7 +240,7 @@ font-family:
 							<div class="col-sm-6 mb-3 mb-sm-2">							
 							<div id="containerMessaggi" class="container"
 								style="margin-top: 50">
-								<table class="table table-striped" style="width:80%">
+								<table class="table table-striped" style="width:200%">
 									<tr>
 										<th>Nome</th>
 										<th>Cognome</th>
