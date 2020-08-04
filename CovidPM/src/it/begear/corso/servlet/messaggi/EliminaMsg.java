@@ -28,17 +28,17 @@ public class EliminaMsg extends HttpServlet {
 		Utente utente = (Utente) session.getAttribute("client");
 		DaoMessaggio.deleteMessaggiUtente(utente); //elimina tutti i messaggi del client
 		if(utente.getTipo().equals("Operatore")) {
-		response.sendRedirect("Comune.jsp?status=eliminati");
+		response.sendRedirect("Comune.jsp");
 		}
 		else if(utente.getTipo().equals("Agente")){
-			response.sendRedirect("Polizia.jsp?status=eliminati");
+			response.sendRedirect("Polizia.jsp");
 			}
 		else if(utente.getTipo().equals("Medico")){
-			response.sendRedirect("Medico.jsp?status=eliminati");
+			response.sendRedirect("Medico.jsp");
 			}
-//		else if(utente.getTipo().equals("Cittadino")){
-//			response.sendRedirect("Cittadino.jsp?status=eliminati");
-//			}
+		else if(utente.getTipo().equals("Cittadino")){
+			response.sendRedirect("Cittadino.jsp");
+			}
 	}
 
 }

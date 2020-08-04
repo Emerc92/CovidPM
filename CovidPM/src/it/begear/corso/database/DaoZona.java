@@ -6,6 +6,25 @@ public class DaoZona {
 	
 	private static SessionManager sm = new SessionManager();
 	
+	public static List<String> getNome() {
+		
+		try {
+			sm.open();
+			
+			@SuppressWarnings("unchecked")
+			List<String> allerte =  (List<String>) sm.getSession().createQuery("SELECT nome FROM Zona")
+													.getResultList();								
+				
+			return allerte;
+						
+		} catch(Exception e) {
+			System.out.println("Errore nel prendere le allerte.");
+			return null;
+			
+		} finally {
+			sm.close();
+		}
+	}
 	
 	public static List<String> getAllerte() {
 		

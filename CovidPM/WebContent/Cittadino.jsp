@@ -3,9 +3,13 @@
 <%@ page import="it.begear.corso.database.Utente"%>
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <%@ page import="it.begear.corso.database.DaoUtente"%>
-<%@ page import="it.begear.corso.database.DaoZona"%>
 <!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
+<%@ page import="it.begear.corso.database.Messaggio"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
+<%@ page import="it.begear.corso.database.DaoMessaggio"%>
+<%@ page import="it.begear.corso.database.DaoZona"%>
 <%@ page import="java.util.List"%>
+<!-- RICORDARSI DI QUESTIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!! -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +20,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Custom fonts for this template-->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 <!-- Bootstrap core JavaScript-->
@@ -36,52 +36,27 @@
 <!-- sweet alert plugins -->
 <script src="js/sweetalert.min.js" type="text/javascript"></script>
 <link href="css/sweetalert.css" rel="stylesheet" type="text/css">
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<script language="JavaScript" type="text/JavaScript">
 
-<!-- api per maps -->
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?v3&key=AIzaSyDis6ttlIoCj-1EsSWarL4AvTyVOKtz1Oc"></script>
+		function fd_preloadImages() {
+		  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+			 var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+			 if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+		}
+	
+	</script>
 <style type="text/css">
-#page-top {
-	background: url(img/fondo.jpg);
+body {
+	background: #b3b9e6;
 	mx-auto;
 	d-block;
 }
 
-.Verde{
-background: #1D976C;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-}
-.Gialla{
-background: #F7971E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #FFD200, #F7971E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #FFD200, #F7971E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-.Rossa{
-background: #f85032;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #e73827, #f85032);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #e73827, #f85032); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-.def{
-    font-size: 32px;
-    color: black;
-	margin-top:10px;
-	
-
-}
-
-
-#cpmlog {
+#cpmlog{
 margin-top:20px;
 color:#08c2ff;
 font-family: 
@@ -90,74 +65,118 @@ font-family:
 	font-family: verdana;
 	font-weight: 900;
 }
-</style>
 
+.wrapper {
+    width:600px;
+    margin: 0 auto;
+}
+
+#mappa {
+    float:left;
+}
+
+#dati
+{
+    float:right;
+    margin: 10px 50px;
+    padding: 20px;
+    width: 500px;
+    color: #4E73DF;
+}
+
+</style>
+   <!--  <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script> -->
 <title>Cittadino</title>
 </head>
-<body>
-<body class=" fixed-nav sticky-footer" id="page-top">
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#btnalert").click(function() {
-				swal({
-					title : "Cancellare messaggi?",
-					text : "una volta cancellati non potrai più visualizzarli",
-					type : "warning",
-					showCancelButton : true,
-					confirmButtonColor : '#3085d6',
-					cancelButtonColor : '#d33',
-					confirmButtonText : 'Si, cancella tutto!',
-					closeOnConfirm : false,
-					
-				}, function() {
-					swal('Cancellati!', 'I messaggi sonos tati cancellati.', 'success');
-				});
+<body class=" fixed-nav sticky-footer" id="page-top"
+	onload="fd_preloadImages('images/Aosta.png','images/Piemonte.png','images/Lombardia.png','images/Trentino.png','images/Veneto.png','images/Friuli.png','images/Liguria.png','images/Emilia.png','images/Toscana.png','images/Marche.png','images/Umbria.png','images/Molise.png','images/Lazio.png','images/Abruzzo.png','images/Campania.png','images/Puglia.png','images/Calabria.png','images/Sicilia.png','images/Sardegna.png')">
 
-			});
-		});
-	</script>
-
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="page-top">
-		<!-- Nested Row within Card Body -->
+	<nav class="navbar navbar-expand-lg  sticky-top" style="background-color: #000000; font-color: #08c2ff;">
+		<!-- navbar content -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarTogglerDemo01"
 			aria-controls="navbarTogglerDemo01" aria-expanded="false"
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		
+
 		<a class="navbar-brand " id="cpmlog" href="Login.jsp"><img src="img/tenor.gif"
 			class="d-inline-block align-top" alt="gif CPM"
 			style="width: 80px; heigth: 80px; margin-top:-20px;"> CPM </a>
 
-		
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<div class="navbar-nav mr-auto ml-auto text-center">
-				<a class="nav-item nav-link" href="#section2"> Mappa Contagi</a> 
-				<a class="nav-item nav-link" href="#messaggi" data-toggle='modal'
-					data-target="#modalMessaggi"> Messaggi </a>
+				
+				<a id="messaggi" class="nav-item nav-link" href="#messaggi" data-toggle='modal'
+					data-target="#modalMessaggi" > Messaggi </a>
+					
 
 			</div>
 			<div class="navbar-nav ">
 				<a class="btn btn-outline-primary" href="Login.jsp">Uscire</a>
 			</div>
+
 		</div>
+
 	</nav>
+
+		
+	
 	<!-- Servlet VisualizzaMsg -->
-	<form action="VisualizzaMsg" id="messaggi" method="post">
+	<form action="EliminaMsg" id="msj" method="post">
 		<div class="container">
-			<div class="modal fade" tabindex="-1" id="modalMessaggi">
+			<div class="modal fade"  id="modalMessaggi">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
 				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header"style="text: centered; font-family: verdana; font-weight: 900; background-color:#1a1aff ;">Messaggi</div>
-						<div class="modal-body"></div>
+					<div class="modal-content ">
+						<div class="modal-header"
+							style="text: centered; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Messaggi</div>
+						<div class="modal-body ">
+
+							<div id="containerMessaggi" class="container"
+								style="margin-top: 50">
+								<table class="table table-striped" style="width:100%">
+									<tr>
+										<th>Giorno</th>
+										<th>Nome</th>
+										<th>Cognome</th>
+										<th>Tipo Utente</th>
+										<th>Messaggio</th>
+									</tr>
+									<%
+									
+										Utente utente = (Utente) session.getAttribute("client");
+										List<Messaggio> messaggi = DaoMessaggio.getMessaggiUtente(utente);
+								for (Messaggio msg : messaggi) {
+									Utente mittente = DaoUtente.getUtenteId(msg.getId_mittente());
+									%>
+
+									<tr>
+									
+										<td><%=msg.getGiorno()%></td>
+										<td><%=mittente.getNome()%></td>
+										<td><%=mittente.getCognome()%></td>
+										<td><%=mittente.getTipo()%></td>
+										<td><%=msg.getTxt_msg()%></td>
+									</tr>
+
+									<%
+										}
+									%>
+
+
+								</table>
+							</div>
+
+						</div>
 						<div class="modal-footer">
-							<button class="btn btn-danger" data-dismiss='modal'>chiudi</button>
+							<button class="btn btn-info" data-dismiss='modal'>chiudi</button>
+
 							<div>
-								<input class="btn btn-warning" id="btnalert" name="EliminaMsg"
-									type="button" value="Elimina messaggi"
-									style="position: absolute; bottom: 16px; left: 16px;" />
+								<input type="submit" data-toggle='modal'
+									data-target="#EliminaMsj" class="btn btn-danger"
+									id="btnalert" value="Elimina Messaggi">
 							</div>
 						</div>
 
@@ -167,42 +186,17 @@ font-family:
 			</div>
 		</div>
 	</form>
-	<!-- Servlet EliminaMsg -->
-	<form action="EliminaMsg" id="eliminamsj" method="post"></form>
-		<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$("#btnalert")
-									.click(
-											function() {
-												swal(
-														{
-															title : "Cancellare messaggi?",
-															text : "una volta cancellati non potrai più visualizzarli",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : '#3085d6',
-															cancelButtonColor : '#d33',
-															confirmButtonText : 'Si, cancella tutto!',
-															closeOnConfirm : false
-														},
-														function() {
-															swal(
-																	'Cancellati!',
-																	'I messaggi sonos tati cancellati.',
-																	'success');
-														});
-
-											});
-						});
-	</script>
 	
-		<!-- qui verrà la mappa -->
-	<div class="mappa">
+	
+
+  <div id="wrapper">
+	<div class="mappa" id="mappa" style="margin-top:20px">
+	
 		<img id="mappaitalia" usemap="#Map" src="images/cartina_italia.png"
 			name="Italia" />
 		<map id="Map" name="Map">
+		
+		
 			<area shape="poly"
 				coords="61,53,62,65,56,67,37,69,35,61,30,55,38,52,41,55,50,53,54,49"
 				href="Cittadino.jsp?status=valdaosta" alt="Val d'Aosta" title="Val d'Aosta"
@@ -305,18 +299,22 @@ font-family:
 				onmouseout="document.Italia.src='images/cartina_italia.png';" />
 		</map>
 	</div>
-<%String accesso = request.getParameter("status"); 
+	
+	<div class="dati" id="dati" style="margin-top:20px">
+<% 
+String accesso = request.getParameter("status");
 List<Long> numUtentiPerZonaRes = DaoUtente.getNumUtentiPerZonaRes();
 List<Long> numPositiviPerZonaRes = DaoUtente.getNumPositiviPerZonaRes();
 List<Long> numNegativiPerZonaRes = DaoUtente.getNumNegativiPerZonaRes();
 List<Long> numNonTestatiPerZonaRes = DaoUtente.getNumNonTestatiPerZonaRes();
+List<String> zone = DaoZona.getNome();
 List<String> allerte = DaoZona.getAllerte();
 Long utentiRegione;
 Long positiviRegione;
 Long negativiRegione;
 Long nonTestatiRegione;
+String zona;
 String allerta;
-String regione;
 if (accesso != null){
 	switch(accesso){
 	case "abruzzo":
@@ -324,162 +322,160 @@ if (accesso != null){
 		positiviRegione = numPositiviPerZonaRes.get(0);
 		negativiRegione = numNegativiPerZonaRes.get(0);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(0);
+		zona = zone.get(0);
 		allerta = allerte.get(0);
-		regione = "abruzzo";
 		break;
 	case "basilicata":
 		utentiRegione = numUtentiPerZonaRes.get(1);
 		positiviRegione = numPositiviPerZonaRes.get(1);
 		negativiRegione = numNegativiPerZonaRes.get(1);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(1);
+		zona = zone.get(1);
 		allerta = allerte.get(1);
-		regione = "basilicata";
 		break;
 	case "calabria":
 		utentiRegione = numUtentiPerZonaRes.get(2);
 		positiviRegione = numPositiviPerZonaRes.get(2);
 		negativiRegione = numNegativiPerZonaRes.get(2);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(2);
+		zona = zone.get(2);
 		allerta = allerte.get(2);
-		regione = "calabria";
-
 		break;
 	case "campania":
 		utentiRegione = numUtentiPerZonaRes.get(3);
 		positiviRegione = numPositiviPerZonaRes.get(3);
 		negativiRegione = numNegativiPerZonaRes.get(3);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(3);
+		zona = zone.get(3);
 		allerta = allerte.get(3);
-		regione = "campania";
-
 		break;
 	case "emilia":
 		utentiRegione = numUtentiPerZonaRes.get(4);
 		positiviRegione = numPositiviPerZonaRes.get(4);
 		negativiRegione = numNegativiPerZonaRes.get(4);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(4);
+		zona = zone.get(4);
 		allerta = allerte.get(4);
-		regione = "emilia";
 		break;
 	case "friuli":
 		utentiRegione = numUtentiPerZonaRes.get(5);
 		positiviRegione = numPositiviPerZonaRes.get(5);
 		negativiRegione = numNegativiPerZonaRes.get(5);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(5);
+		zona = zone.get(5);
 		allerta = allerte.get(5);
-		regione = "friuli";
 		break;
 	case "lazio":
 		utentiRegione = numUtentiPerZonaRes.get(6);
 		positiviRegione = numPositiviPerZonaRes.get(6);
 		negativiRegione = numNegativiPerZonaRes.get(6);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(6);
+		zona = zone.get(6);
 		allerta = allerte.get(6);
-		regione = "lazio";
 		break;
 	case "liguria":
 		utentiRegione = numUtentiPerZonaRes.get(7);
 		positiviRegione = numPositiviPerZonaRes.get(7);
 		negativiRegione = numNegativiPerZonaRes.get(7);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(7);
+		zona = zone.get(7);
 		allerta = allerte.get(7);
-		regione = "liguria";
 		break;
 	case "lombardia":
 		utentiRegione = numUtentiPerZonaRes.get(8);
 		positiviRegione = numPositiviPerZonaRes.get(8);
 		negativiRegione = numNegativiPerZonaRes.get(8);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(8);
+		zona = zone.get(8);
 		allerta = allerte.get(8);
-		regione = "lombardia";
 		break;
 	case "marche":
 		utentiRegione = numUtentiPerZonaRes.get(9);
 		positiviRegione = numPositiviPerZonaRes.get(9);
 		negativiRegione = numNegativiPerZonaRes.get(9);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(9);
+		zona = zone.get(9);
 		allerta = allerte.get(9);
-		regione = "marche";
 		break;
 	case "molise":
 		utentiRegione = numUtentiPerZonaRes.get(10);
 		positiviRegione = numPositiviPerZonaRes.get(10);
 		negativiRegione = numNegativiPerZonaRes.get(10);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(10);
+		zona = zone.get(10);
 		allerta = allerte.get(10);
-		regione = "molise";
 		break;
 	case "piemonte":
 		utentiRegione = numUtentiPerZonaRes.get(11);
 		positiviRegione = numPositiviPerZonaRes.get(11);
 		negativiRegione = numNegativiPerZonaRes.get(11);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(11);
+		zona = zone.get(11);
 		allerta = allerte.get(11);
-		regione = "piemonte";
 		break;
 	case "puglia":
 		utentiRegione = numUtentiPerZonaRes.get(12);
 		positiviRegione = numPositiviPerZonaRes.get(12);
 		negativiRegione = numNegativiPerZonaRes.get(12);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(12);
+		zona = zone.get(12);
 		allerta = allerte.get(12);
-		regione = "puglia";
 		break;
 	case "sardegna":
 		utentiRegione = numUtentiPerZonaRes.get(13);
 		positiviRegione = numPositiviPerZonaRes.get(13);
 		negativiRegione = numNegativiPerZonaRes.get(13);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(13);
+		zona = zone.get(13);
 		allerta = allerte.get(13);
-		regione = "sardegna";
 		break;
 	case "sicilia":
 		utentiRegione = numUtentiPerZonaRes.get(14);
 		positiviRegione = numPositiviPerZonaRes.get(14);
 		negativiRegione = numNegativiPerZonaRes.get(14);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(14);
+		zona = zone.get(14);
 		allerta = allerte.get(14);
-		regione = "sicilia";
 		break;
 	case "toscana":
 		utentiRegione = numUtentiPerZonaRes.get(15);
 		positiviRegione = numPositiviPerZonaRes.get(15);
 		negativiRegione = numNegativiPerZonaRes.get(15);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(15);
+		zona = zone.get(15);
 		allerta = allerte.get(15);
-		regione = "toscana";
 		break;
 	case "trentino":
 		utentiRegione = numUtentiPerZonaRes.get(16);
 		positiviRegione = numPositiviPerZonaRes.get(16);
 		negativiRegione = numNegativiPerZonaRes.get(16);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(16);
+		zona = zone.get(16);
 		allerta = allerte.get(16);
-		regione = "trentino";
 		break;
 	case "umbria":
 		utentiRegione = numUtentiPerZonaRes.get(17);
 		positiviRegione = numPositiviPerZonaRes.get(17);
 		negativiRegione = numNegativiPerZonaRes.get(17);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(17);
+		zona = zone.get(17);
 		allerta = allerte.get(17);
-		regione = "umbria";
 		break;
 	case "valdaosta":
 		utentiRegione = numUtentiPerZonaRes.get(18);
 		positiviRegione = numPositiviPerZonaRes.get(18);
 		negativiRegione = numNegativiPerZonaRes.get(18);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(18);
+		zona = zone.get(18);
 		allerta = allerte.get(18);
-		regione = "valdaosta";
 		break;
 	case "veneto":
 		utentiRegione = numUtentiPerZonaRes.get(19);
 		positiviRegione = numPositiviPerZonaRes.get(19);
 		negativiRegione = numNegativiPerZonaRes.get(19);
 		nonTestatiRegione = numNonTestatiPerZonaRes.get(19);
+		zona = zone.get(19);
 		allerta = allerte.get(19);
-		regione = "veneto";
 		break;
 	default:
 		out.println("errore nella mappa");
@@ -488,21 +484,22 @@ if (accesso != null){
 		negativiRegione = null;
 		nonTestatiRegione = null;
 		allerta = null;
-		regione = null;
+		zona = null;
 
 	}
 	
-	
-		
-out.println("<div class ="+'"'+allerta+ " def"+'"'+">");
-out.println("<h1>"+regione+"</h1>");
-out.println("numero abitanti : "+utentiRegione+"<br>");
+
+out.println("<h1>"+zona+"</h1>");
+out.println("Numero di abitanti : "+utentiRegione+"<br>");
 out.println(" Tamponi  : "+(utentiRegione-nonTestatiRegione)+"<br>");
-out.println(" positivi  : "+positiviRegione+"<br>");
-out.println(" negativi  : "+negativiRegione+"<br>");
-out.println("</div>");
+out.println(" Positivi  : "+positiviRegione+"<br>");
+out.println(" Negativi  : "+negativiRegione+"<br>");
+out.println(" Non Testati  : "+nonTestatiRegione+"<br>");
+out.println(" Allerta  : "+allerta+"<br>");
 
 }
 %> 
+	</div>
+   </div>
 </body>
 </html>
