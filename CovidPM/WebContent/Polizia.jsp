@@ -51,7 +51,7 @@
 	</script>
 <style type="text/css">
 body {
-	background: #b3b9e6;
+	background: linear-gradient(87deg, rgba(194,197,212,1) 38%, rgba(219,219,200,1) 65%, rgba(232,230,194,1) 82%, rgba(244,241,187,1) 89%);
 	mx-auto;
 	d-block;
 }
