@@ -57,7 +57,6 @@
 	<%
 		session.setAttribute("status", "ok");
 	%>
-	<!-- <div id="particles-js"></div>-->
 
 		<!-- Nested Row within Card Body    10806 -->
 	<div class="container-fluid" style="margin-top: 90px; z-index: 99;">
@@ -112,7 +111,7 @@
 
 					</div>
 					<div class="container-fluid">
-						<div class="col-sm-6 col-md-6  col-xl-5 content mt-5"
+						<div class="col-sm-5 col-md-5  col-xl-5 content mt-5"
 							id="database">
 			
 							<form action="AggiornaDB" method="post">
@@ -123,7 +122,7 @@
 							<form action="ResetDB" method="post">
 								<input name="submit" type="submit" id="resetdb"
 									class="btn btn-primary btn-user btn-block"
-									value="Resetta Data Base" />
+									value="Resetta Data Base" style="margin-left:250px; margin-top:	-35px;"/>
 							</form>
 								<%
 										String accessodb = request.getParameter("status");
