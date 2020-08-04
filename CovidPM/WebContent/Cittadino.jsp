@@ -128,7 +128,7 @@ font-family:
 		<div class="container">
 			<div class="modal fade"  id="modalMessaggi">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
-				<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
 					<div class="modal-content ">
 						<div class="modal-header"
 							style="text: centered; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Messaggi</div>

@@ -132,7 +132,7 @@ font-family:
 		<div class="container">
 			<div class="modal fade"  id="modalMessaggi">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
-				<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
 					<div class="modal-content ">
 						<div class="modal-header"
 							style="text: centered; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Messaggi</div>
@@ -196,7 +196,7 @@ font-family:
 		<div class="container">
 			<div class="modal fade" tabindex="-1" id="modalControlla">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
-				<div class="modal-dialog modal-dialog-centered" style = "width:1250px">
+				<div class="modal-dialog modal-dialog-centered modal-xl" style = "width:1250px">
 					<div class="modal-content">
 						<div class="modal-header"
 							style="text: center; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Controlla
@@ -229,7 +229,7 @@ font-family:
 <div class="container">
 			<div class="modal fade" tabindex="-1" id="modalControlla2">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
-				<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
 					<div class="modal-content">
 						<div class="modal-header"
 							style="text: center; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Visualizza
@@ -279,7 +279,7 @@ font-family:
 		<div class="container">
 			<div class="modal fade"  id="modalVisualizzaP">
 				<!-- tabindex fa che quando premi esc si chiuda il modal -->
-				<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
 					<div class="modal-content ">
 						<div class="modal-header"
 							style="text: centered; font-family: verdana; opacity: 0.8; font-weight: 900; background-color: #1a1aff; color: white;">Messaggi</div>
